@@ -1,15 +1,22 @@
+// importing packages
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config({ path: './config.env' });
 const api = express();
-const port = 5000;
-
-mongoose.connect("mongodb://localhost:5000/App");
-
+const port = process.env.PORT || 5000;
 api.use(cors());
-api.get('/', (req, res) =>{
+api.use(express.json());
+const dbo = require('./db/conn');
+
+
+api.get('/', (req, res) => {
     res.json("Successful connection.");
     res.render("index", { text: "Hello World" })
 });
 
-api.listen(port, ()=>console.log('API is listening on port ' + port));
+api.listen(port, () => {
+    dbo.connectToServer(function (err) {
+        if(err) console.error(err);
+    });
+    console.log(`Server is running on port: ${port}`);
+});
