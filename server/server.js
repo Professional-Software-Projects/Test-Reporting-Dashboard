@@ -6,7 +6,7 @@ const port = 5000;
 
 mongoose.connect("mongodb://localhost:5000/App");
 
-api.use(cors);
+api.use(cors());
 api.get('/', (req, res) =>{
     res.json("Successful connection.");
     res.render("index", { text: "Hello World" })
