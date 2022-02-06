@@ -1,4 +1,6 @@
 const { MongoClient } = require('mongodb');
+
+// get connection string
 const Db = process.env.ATLAS_URI;
 const client = new MongoClient(Db, {
     useNewUrlParser: true,
@@ -11,6 +13,7 @@ module.exports = {
     connectToServer: function (callback) {
         client.connect(function(err, db) {
             if(db) {
+                // default database name
                 _db = db.db('Database');
                 console.log('Successfully connected to MongoDB.');
             }

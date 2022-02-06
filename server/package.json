@@ -13,9 +13,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "express-react-views": "^0.11.0",
     "mongodb": "^4.3.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
-  "devDependencies": {},
   "description": ""
 }

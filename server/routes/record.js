@@ -7,7 +7,9 @@ const ObjectId = require('mongodb').ObjectId;
 
 // returns a list of the records
 recordRoutes.route('/record').get(function(req, res) {
+    // connect to the database
     let dbConnect = dbo.getDb('tests');
+    // gets all records and puts them into an array
     dbConnect
         .collection('records')
         .find({})
@@ -20,6 +22,7 @@ recordRoutes.route('/record').get(function(req, res) {
 // returns a single record by id 
 recordRoutes.route("/record/:id").get(function(req, res) {
     let dbConnect = dbo.getDb();
+    // gets all records and returns whichever record matches the supplied id
     let myQuery = { _id: ObjectId(req.params.id) };
     dbConnect
         .connect('records')
@@ -32,11 +35,13 @@ recordRoutes.route("/record/:id").get(function(req, res) {
 // add a record
 recordRoutes.route('/record/add').post(function(req, response) {
     let dbConnect = dbo.getDb();
+    // construct record
     let myObj = {
         test_number: req.body.test_number,
         test_no_passed: req.body.test_no_passed,
         test_no_failed: req.body.test_no_failed,
     };
+    // insert record
     dbConnect.collection("records").insertOne(myObj, function(err, res){
         if(err) throw err;
         response.json(res);
@@ -47,6 +52,7 @@ recordRoutes.route('/record/add').post(function(req, response) {
 recordRoutes.route('/update/:id').post(function(req, response) {
     let dbConnect = dbo.getDb();
     let myQuery = { _id: ObjectId(req.params.id)};
+    // construct new record
     let newValues = {
         $set: {
             test_number: req.body.test_number,
@@ -55,6 +61,7 @@ recordRoutes.route('/update/:id').post(function(req, response) {
         },
     };
 
+    // replace old record with new record
     dbConnect
         .collection("records")
         .updateOne(myQuery, newValues, function(err, res) {
@@ -64,6 +71,7 @@ recordRoutes.route('/update/:id').post(function(req, response) {
         });
 });
 
+// delete a record by id
 recordRoutes.route('/:id').delete((req, response) => {
     let dbConnect = dbo.getDb();
     let myQuery = { _id: ObjectId(req.params.id )};
