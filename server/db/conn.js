@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 const assert = require('assert');
 
 // get connection string
-const Db = 'mongodb://superuser:DgM8orMPzzmyJY!m@localhost:27017/admin';
+const Db = 'mongodb://localhost@localhost:27017/admin';
 
 var _db;
 
