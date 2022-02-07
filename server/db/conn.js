@@ -1,22 +1,18 @@
 const { MongoClient } = require('mongodb');
+const assert = require('assert');
 
 // get connection string
-const Db = process.env.ATLAS_URI;
-const client = new MongoClient(Db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const Db = 'mongodb://superuser:DgM8orMPzzmyJY!m@localhost:27017/admin';
 
 var _db;
 
 module.exports = {
     connectToServer: function (callback) {
-        client.connect(function(err, db) {
-            if(db) {
-                // default database name
-                _db = db.db('Database');
+        MongoClient.connect(Db, function(err, client) {
+            if(assert.equal(null, err)) {
                 console.log('Successfully connected to MongoDB.');
             }
+            MongoClient.close();
             return callback(err);
         });
     },
