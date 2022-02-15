@@ -1,18 +1,18 @@
-const { MongoClient } = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 // get connection string
-const Db = 'mongodb://localhost@localhost:27017/admin';
+const connString = 'mongodb://localhost:27017';
 
 var _db;
 
 module.exports = {
     connectToServer: function (callback) {
-        MongoClient.connect(Db, function(err, client) {
-            if(assert.equal(null, err)) {
-                console.log('Successfully connected to MongoDB.');
-            }
-            MongoClient.close();
+        MongoClient.connect(connString, function(err, client) {
+            assert.equal(null, err);
+            // will only return this message if connection is made
+            console.log('Successful connection to the database.');
+            client.close();
             return callback(err);
         });
     },
