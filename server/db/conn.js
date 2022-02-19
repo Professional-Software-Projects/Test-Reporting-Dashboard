@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 // get connection string
-const connString = 'mongodb://localhost:27017';
+const connString = 'mongodb://mongo:27017';
 const containerConnString = process.env.MONGODB_CONNSTRING;
 
 var _db;
