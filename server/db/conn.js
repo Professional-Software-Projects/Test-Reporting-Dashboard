@@ -3,6 +3,7 @@ const assert = require('assert');
 
 // get connection string
 const connString = 'mongodb://localhost:27017';
+const containerConnString = process.env.MONGODB_CONNSTRING;
 
 var _db;
 
