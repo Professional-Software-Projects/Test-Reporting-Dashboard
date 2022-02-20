@@ -5,7 +5,7 @@ import express, { json } from 'express';
 const app = express();
 import { make_API_call } from './api_caller';
 import cors from 'cors';
-import { connectToServer } from '../db/conn';
+import { connectToServer } from '../db_functions/conn';
 const port = process.env.PORT || 5000;
 const pathToIndex = join(__dirname, '/../client/public');
 
