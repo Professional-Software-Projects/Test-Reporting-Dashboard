@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Load from './App';
+import GetReport from './App';
 import './App.css';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Load />
-    </React.StrictMode>, 
+    <div>
+        <GetReport />
+    </div>,
     document.getElementById('root')
 );

@@ -1,17 +1,17 @@
 // importing packages
 require('dotenv').config({ path: './config.env' });
-const path = require('path');
-const express = require('express');
+import { join } from 'path';
+import express, { json } from 'express';
 const app = express();
-const api_caller = require('./api_caller');
-const cors = require('cors');
-const dbo = require('./db/conn');
+import { make_API_call } from './api_caller';
+import cors from 'cors';
+import { connectToServer } from '../db/conn';
 const port = process.env.PORT || 5000;
-const pathToIndex = path.join(__dirname, '/../client/public');
+const pathToIndex = join(__dirname, '/../client/public');
 
 // any information received by the server is put through this middleware
 // which will do things such as formatting the body of a request to JSON
-app.use(express.json());
+app.use(json());
 app.use(cors());
 
 app.get('/', (req, res) => {
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 // gets test results from an API endpoint
 app.get('/json', (req, res) => {
-    api_caller.make_API_call('http://host.docker.internal:3030/migrator-v2/metadata/nightlies-passed/2/testReport/api/json')
+    make_API_call('http://host.docker.internal:3030/migrator-v2/metadata/nightlies-passed/2/testReport/api/json')
         .then(response => {
             console.log('Successful API call.');
             res.json(response);
@@ -32,8 +32,9 @@ app.get('/json', (req, res) => {
         });
 });
 
+
 app.listen(port, () => {
-    dbo.connectToServer(function (err) {
+    connectToServer(function (err) {
         if (err) console.error(err);
     });
 
