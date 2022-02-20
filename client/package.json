@@ -35,10 +35,15 @@
       "last 1 safari version"
     ]
   },
-  "description": "By Ross Edwards, James Ackers and Philip Janes.",
+  "description": "",
   "main": "index.js",
-  "devDependencies": {},
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.17.3",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-stage-0": "^7.8.3"
+  }
 }

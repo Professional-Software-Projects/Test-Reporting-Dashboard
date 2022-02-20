@@ -15,14 +15,14 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.json("Successful Connection.");
+    res.json(`Successful connection on port ${port}.`);
 });
 
 // gets test results from an API endpoint
 app.get('/json', (req, res) => {
-    api_caller.make_API_call('http://localhost:3030/migrator-v2/metadata/nightlies-passed/2/testReport/api/json')
-        .then(response => { 
-            console.log('Succesful API call.');
+    api_caller.make_API_call('http://host.docker.internal:3030/migrator-v2/metadata/nightlies-passed/2/testReport/api/json')
+        .then(response => {
+            console.log('Successful API call.');
             res.json(response);
         })
         .catch(err => {
@@ -34,8 +34,8 @@ app.get('/json', (req, res) => {
 
 app.listen(port, () => {
     dbo.connectToServer(function (err) {
-        if(err) console.error(err);
+        if (err) console.error(err);
     });
-    
+
     console.log(`Server is running on port: ${port}`);
 });
