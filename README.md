@@ -23,3 +23,5 @@ You will need to have Docker and Docker Compose installed for this.
 To build the image, type `docker build --tag NAME_OF_IMAGE ./NAME_OF_IMAGE/`.
 
 Once the images have been built, the dashboard can be run with the command `docker-compose up`, which will run the frontend, backend and database in three separate containers. When you're finished with the container, simply press `CTRL+C` to close it.
+
+If you would like to access the MongoDB Shell whilst the container is running, execute the command `docker exec -it test-reporting-dashboard-database bash`, then if the prompt changes to a shebang (!#), type `mongo` and you will enter the shell and can enter commands.

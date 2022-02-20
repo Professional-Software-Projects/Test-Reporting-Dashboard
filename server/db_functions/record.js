@@ -1,40 +1,40 @@
-const express = require('express');
-const recordRoutes = express.Router();
+import { Router } from 'express';
+const recordRoutes = Router();
 // connect to the database
-const dbo = require('../db/conn');
+import { getDb } from '../db/conn';
 // converts record id to an object
-const ObjectId = require('mongodb').ObjectId;
+import { ObjectId } from 'mongodb';
 
 // returns a list of the records
-recordRoutes.route('/record').get(function(req, res) {
+recordRoutes.route('/record').get(function (req, res) {
     // connect to the database
-    let dbConnect = dbo.getDb('tests');
+    let dbConnect = getDb('tests');
     // gets all records and puts them into an array
     dbConnect
         .collection('records')
         .find({})
-        .toArray(function(err, result) {
-            if(err) throw err;
+        .toArray(function (err, result) {
+            if (err) throw err;
             res.json(result);
         });
 });
 
 // returns a single record by id 
-recordRoutes.route("/record/:id").get(function(req, res) {
-    let dbConnect = dbo.getDb();
+recordRoutes.route("/record/:id").get(function (req, res) {
+    let dbConnect = getDb();
     // gets all records and returns whichever record matches the supplied id
     let myQuery = { _id: ObjectId(req.params.id) };
     dbConnect
         .connect('records')
-        .findOne(myQuery, function(err, result) {
-            if(err) throw err;
+        .findOne(myQuery, function (err, result) {
+            if (err) throw err;
             res.json(result);
         });
 });
 
 // add a record
-recordRoutes.route('/record/add').post(function(req, response) {
-    let dbConnect = dbo.getDb();
+recordRoutes.route('/record/add').post(function (req, response) {
+    let dbConnect = getDb();
     // construct record
     let myObj = {
         test_number: req.body.test_number,
@@ -42,16 +42,16 @@ recordRoutes.route('/record/add').post(function(req, response) {
         test_no_failed: req.body.test_no_failed,
     };
     // insert record
-    dbConnect.collection("records").insertOne(myObj, function(err, res){
-        if(err) throw err;
+    dbConnect.collection("records").insertOne(myObj, function (err, res) {
+        if (err) throw err;
         response.json(res);
     });
 });
 
 // update a record by id
-recordRoutes.route('/update/:id').post(function(req, response) {
-    let dbConnect = dbo.getDb();
-    let myQuery = { _id: ObjectId(req.params.id)};
+recordRoutes.route('/update/:id').post(function (req, response) {
+    let dbConnect = getDb();
+    let myQuery = { _id: ObjectId(req.params.id) };
     // construct new record
     let newValues = {
         $set: {
@@ -64,8 +64,8 @@ recordRoutes.route('/update/:id').post(function(req, response) {
     // replace old record with new record
     dbConnect
         .collection("records")
-        .updateOne(myQuery, newValues, function(err, res) {
-            if(err) throw err;
+        .updateOne(myQuery, newValues, function (err, res) {
+            if (err) throw err;
             console.log("1 document updated.");
             response.json(res);
         });
@@ -73,15 +73,15 @@ recordRoutes.route('/update/:id').post(function(req, response) {
 
 // delete a record by id
 recordRoutes.route('/:id').delete((req, response) => {
-    let dbConnect = dbo.getDb();
-    let myQuery = { _id: ObjectId(req.params.id )};
+    let dbConnect = getDb();
+    let myQuery = { _id: ObjectId(req.params.id) };
     dbConnect
         .collection("records")
-        .deleteOne(myQuery, function(err, obj) {
-            if(err) throw err;
+        .deleteOne(myQuery, function (err, obj) {
+            if (err) throw err;
             console.log("1 document deleted.");
             response.status(obj);
         });
 });
 
-module.exports = recordRoutes;
+export default recordRoutes;
