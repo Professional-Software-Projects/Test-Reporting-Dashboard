@@ -22,6 +22,14 @@ You will need to have Docker and Docker Compose installed for this.
 
 To build the image, type `docker build --tag NAME_OF_IMAGE ./NAME_OF_IMAGE/`.
 
-Once the images have been built, the dashboard can be run with the command `docker-compose up`, which will run the frontend, backend and database in three separate containers. When you're finished with the container, simply press `CTRL+C` to close it.
+Once the images have been built, the dashboard can be run with the command `docker-compose up`, which will run the frontend, backend and database in three separate containers. When you're finished with the container, run the command `docker-compose stop` to close it. After the first time running the container, you can run it with `docker-compose start` instead.
 
 If you would like to access the MongoDB Shell whilst the container is running, execute the command `docker exec -it test-reporting-dashboard-database bash`, then if the prompt changes to a shebang (!#), type `mongo` and you will enter the shell and can enter commands.
+
+## Dumping and Restoring Data
+
+To dump the data from the database so that it can be pushed to GitHub, use the command `docker exec -i <container_name> /usr/bin/mongodump --username <username> --password <password> --authenticationDatabase admin --db <database_name> --out /dump`. Once the data has been dumped, copy the data out to the repository with `docker cp <container_name>:/dump path/to/project/test-reporting-dashboard/server/data`.
+
+To copy the data back into the container, use the command `docker cp path/to/project/test-reporting-dashboard/server/data <container_name>:/dump`, then `docker exec -i <container_name> /usr/bin/mongorestore --username <username> --password <password> --authenticationDatabase admin --db <database_name> /dump/<database_name>`.
+
+If you want to delete the dump files from the container, run the command `docker exec -it <container_name> /bin/bash` then `rm -rf /dump`
