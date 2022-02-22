@@ -76,60 +76,44 @@ const migratorCoreDataV1 = 'http://host.docker.internal:3030/migrator-v1/core-da
 const migratorCoreDataV2 = 'http://host.docker.internal:3030/migrator-v2/core-data/';
 const apiSuffix = '/api/json';
 
+function fetchReport(res, req, url) {
+    make_API_call(url)
+        .then(response => {
+            res.json(response);
+            console.log(`Communication with the API from ${req.originalUrl} was successful.`);
+        })
+        .catch(err => {
+            console.log(`Unable to communicate with API from ${req.originalUrl}. Is the API down?`);
+            console.log(err);
+            res.send(err);
+        });
+}
+
 app.get('/', (req, res) => {
     res.json(`Successful connection on port ${port}.`);
 });
 
 // gets test results from an API endpoint
 app.get('/:version/coreData/healthReport/:result', (req, res) => {
-    if (req.params['version'] === 'v1' && req.params['result'] === 'passed') {
-        make_API_call(migratorCoreDataV1 + 'nightlies-passed' + apiSuffix)
-            .then(response => {
-                console.log('Successful API call.');
-                res.json(response);
-            })
-            .catch(err => {
-                console.log('Unsuccessful API call.');
-                console.log(err);
-                res.send(err);
-            });
-    } else if (req.params['version'] === 'v1' && req.params['result'] === 'failed') {
-        make_API_call(migratorCoreDataV1 + 'nightlies-failed' + apiSuffix)
-            .then(response => {
-                console.log('Successful API call.');
-                res.json(response);
-            })
-            .catch(err => {
-                console.log('Unsuccessful API call.');
-                console.log(err);
-                res.send(err);
-            });
-    } else if (req.params['version'] === 'v2' && req.params['result'] === 'passed') {
-        make_API_call(migratorCoreDataV2 + 'nightlies-passed' + apiSuffix)
-            .then(response => {
-                console.log('Successful API call.');
-                res.json(response);
-            })
-            .catch(err => {
-                console.log('Unsuccessful API call.');
-                console.log(err);
-                res.send(err);
-            });
-    } else if (req.params['version'] === 'v2' && req.params['result'] === 'failed') {
-        make_API_call(migratorCoreDataV2 + 'nightlies-failed' + apiSuffix)
-            .then(response => {
-                console.log('Successful API call.');
-                res.json(response);
-            })
-            .catch(err => {
-                console.log('Unsuccessful API call.');
-                console.log(err);
-                res.send(err);
-            });
+    const version = req.params['version'];
+    const result = req.params['result'];
+    // const buildNumber = req.params['buildNumber'];
+
+    if (version === 'v1' && result === 'passed') {
+        fetchReport(res, req, migratorCoreDataV1 + 'nightlies-passed' + apiSuffix);
+    } else if (version === 'v1' && result === 'failed') {
+        fetchReport(res, req, migratorCoreDataV1 + 'nightlies-failed' + apiSuffix);
+    } else if (version === 'v2' && result === 'passed') {
+        fetchReport(res, req, migratorCoreDataV2 + 'nightlies-passed' + apiSuffix);
+    } else if (version === 'v2' && result === 'failed') {
+        fetchReport(res, req, migratorCoreDataV2 + 'nightlies-failed' + apiSuffix);
     } else {
-        console.log('Invalid URL!');
+        console.log(`${req.originalUrl} is invalid.`);
+        res.json({ message: `${req.originalUrl} is invalid.` });
     }
 });
+
+
 
 app.listen(port, () => {
     connectToServer(function (err) {
