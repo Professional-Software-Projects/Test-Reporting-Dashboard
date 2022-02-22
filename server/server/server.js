@@ -94,10 +94,10 @@ app.get('/', (req, res) => {
 });
 
 // gets test results from an API endpoint
-app.get('/:version/coreData/healthReport/:result', (req, res) => {
+app.get('/:version/coreData/healthReport/:result/:buildNumber([0-9]+)?/testReport?', (req, res) => {
     const version = req.params['version'];
     const result = req.params['result'];
-    // const buildNumber = req.params['buildNumber'];
+    const buildNumber = req.params['buildNumber'];
 
     if (version === 'v1' && result === 'passed') {
         fetchReport(res, req, migratorCoreDataV1 + 'nightlies-passed' + apiSuffix);
