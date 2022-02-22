@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { BasicTable } from './BasicTable'
 
 // this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
 // until this string is received, it will display the string "Loading..."
@@ -38,8 +39,17 @@ function GetReport() {
 };
 export { GetReport as default };
 
+function App() {
+    return(
+        <div className='App'>
+            <BasicTable>
 
+            </BasicTable>
+        </div>
+    )
+}
 
+export default App
 
 
 
