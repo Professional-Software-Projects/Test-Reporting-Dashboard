@@ -33,3 +33,8 @@ To dump the data from the database so that it can be pushed to GitHub, use the c
 To copy the data back into the container, use the command `docker cp path/to/project/test-reporting-dashboard/server/data <container_name>:/dump`, then `docker exec -i <container_name> /usr/bin/mongorestore --username <username> --password <password> --authenticationDatabase admin --db <database_name> /dump/<database_name>`.
 
 If you want to delete the dump files from the container, run the command `docker exec -it <container_name> /bin/bash` then `rm -rf /dump`
+
+An alternative method of dumping files is to install the MongoDB Database Tools (https://www.mongodb.com/try/download/database-tools) and running the MongoDump application whilst having the database open. It will automatically
+dump the collections into the dump folder alongside all the applications, in BSON format.
+
+
