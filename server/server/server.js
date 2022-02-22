@@ -6,6 +6,7 @@ const app = express();
 import { make_API_call } from './api_caller';
 import cors from 'cors';
 import { connectToServer } from '../db_functions/conn';
+import e from 'express';
 const port = process.env.PORT || 5000;
 const pathToIndex = join(__dirname, '/../client/public');
 
@@ -74,6 +75,10 @@ app.use(cors());
 
 const migratorCoreDataV1 = 'http://host.docker.internal:3030/migrator-v1/core-data/';
 const migratorCoreDataV2 = 'http://host.docker.internal:3030/migrator-v2/core-data/';
+const migratorMetadataV1 = 'http://host.docker.internal:3030/migrator-v1/metadata/';
+const migratorMetadataV2 = 'http://host.docker.internal:3030/migrator-v2/metadata/';
+const migratorUIV1 = 'http://host.docker.internal:3030/migrator-v1/ui/';
+const migratorUIV2 = 'http://host.docker.internal:3030/migrator-v2/ui/';
 const apiSuffix = '/api/json';
 
 function fetchReport(res, req, url) {
@@ -83,24 +88,34 @@ function fetchReport(res, req, url) {
             console.log(`Communication with the API from ${req.originalUrl} was successful.`);
         })
         .catch(err => {
-            console.log(`Unable to communicate with API from ${req.originalUrl}. Is the API down?`);
+            console.log(`Unable to communicate with the API from ${req.originalUrl}. Is the API down?`);
             console.log(err);
             res.send(err);
         });
 }
 
 app.get('/', (req, res) => {
-    res.json(`Successful connection on port ${port}.`);
+    res.json(`Successful connection on port: ${port}.`);
 });
 
-// gets test results from an API endpoint
-app.get('/:version/coreData/healthReport/:result/:buildNumber([0-9]+)?/testReport?', (req, res) => {
+// core data test report
+app.get(['/:version/coreData/:result', '/:version/coreData/:result/:buildNumber([0-9]+)', '/:version/coreData/:result/:buildNumber([0-9]+)/report?'], (req, res) => {
     const version = req.params['version'];
     const result = req.params['result'];
     const buildNumber = req.params['buildNumber'];
+    const report = req.params['report'];
 
     if (version === 'v1' && result === 'passed') {
-        fetchReport(res, req, migratorCoreDataV1 + 'nightlies-passed' + apiSuffix);
+        if (buildNumber) {
+            if (report) {
+                fetchReport(res, req, migratorCoreDataV1 + 'nightlies-passed/' + buildNumber + '/' + 'testReport' + apiSuffix);
+            } else {
+                fetchReport(res, req, migratorCoreDataV1 + 'nightlies-passed/' + buildNumber + apiSuffix);
+            }
+        } else {
+            fetchReport(res, req, migratorCoreDataV1 + 'nightlies-passed' + apiSuffix);
+        }
+
     } else if (version === 'v1' && result === 'failed') {
         fetchReport(res, req, migratorCoreDataV1 + 'nightlies-failed' + apiSuffix);
     } else if (version === 'v2' && result === 'passed') {
@@ -113,7 +128,55 @@ app.get('/:version/coreData/healthReport/:result/:buildNumber([0-9]+)?/testRepor
     }
 });
 
+// app.get('/:version/coreData/:result/:buildNumber([0-9]+)', (req, res) => {
+//     const version = req.params['version'];
+//     const result = req.params['result'];
+//     const buildNumber = req.params['buildNumber'];
 
+//     if(version === 'v1')
+// })
+
+// metadata test report
+app.get('/:version/metadata/:result', (req, res) => {
+    const version = req.params['version'];
+    const result = req.params['result'];
+
+    if (version === 'v1' && result === 'passed') {
+        fetchReport(res, req, migratorMetadataV1 + 'nightlies-passed' + apiSuffix);
+    } else if (version === 'v1' && result === 'failed') {
+        fetchReport(res, req, migratorMetadataV1 + 'nightlies-failed' + apiSuffix);
+    } else if (version === 'v2' && result === 'passed') {
+        fetchReport(res, req, migratorMetadataV2 + 'nightlies-passed' + apiSuffix);
+    } else if (version === 'v2' && result === 'failed') {
+        fetchReport(res, req, migratorMetadataV2 + 'nightlies-failed' + apiSuffix);
+    } else {
+        console.log(`${req.originalUrl} is invalid.`);
+        res.json({ message: `${req.originalUrl} is invalid.` });
+    }
+});
+
+// ui test report
+app.get('/:version/ui/:result', (req, res) => {
+    const version = req.params['version'];
+    const result = req.params['result'];
+
+    if (version === 'v1' && result === 'passed') {
+        fetchReport(res, req, migratorUIV1 + 'integration-passed' + apiSuffix);
+    } else if (version === 'v1' && result === 'inprogress') {
+        fetchReport(res, req, migratorUIV1 + 'integration-inprogress' + apiSuffix);
+    } else if (version === 'v1' && result === 'failed') {
+        fetchReport(res, req, migratorUIV1 + 'ujs-failed' + apiSuffix);
+    } else if (version === 'v2' && result === 'passed') {
+        fetchReport(res, req, migratorUIV2 + 'integration-passed' + apiSuffix);
+    } else if (version === 'v2' && result === 'inprogress') {
+        fetchReport(res, req, migratorUIV2 + 'integration-inprogress' + apiSuffix);
+    } else if (version === 'v2' && result === 'failed') {
+        fetchReport(res, req, migratorUIV2 + 'ujs-failed' + apiSuffix);
+    } else {
+        console.log(`${req.originalUrl} is invalid.`);
+        res.json({ message: `${req.originalUrl} is invalid.` });
+    }
+});
 
 app.listen(port, () => {
     connectToServer(function (err) {
