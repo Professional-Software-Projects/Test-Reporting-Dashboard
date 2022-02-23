@@ -51,18 +51,6 @@ function App() {
     )
 }
 
-export default App
-
-
-
-
-
-
-
-
-
-
-
 const Styles = styled.div`
   padding: 1rem;
   table {
