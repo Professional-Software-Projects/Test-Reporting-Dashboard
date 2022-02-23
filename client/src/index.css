@@ -13,3 +13,42 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+<<<<<<< Updated upstream
+=======
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: whitesmoke;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: grey;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.table {
+  background-color: whitesmoke;
+  color: black;
+  margin: 20px;
+  padding: 20px 16px;
+  vertical-align: top;
+}
+
+table, th, td {
+  border: 3px solid #f89a1f;
+  border-collapse: collapse;
+  vertical-align: top;
+}
+>>>>>>> Stashed changes
