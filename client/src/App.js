@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { useTable } from 'react-table'
 import './App.css';
-import { BasicTable } from './BasicTable'
 
 // this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
 // until this string is received, it will display the string "Loading..."
@@ -39,9 +38,9 @@ function GetReport() {
         </div>
     );
 };
-export { GetReport as default };
+//export { GetReport as default };
 
-function App() {
+/*function App() {
     return(
         <div className='App'>
             <BasicTable>
@@ -49,7 +48,7 @@ function App() {
             </BasicTable>
         </div>
     )
-}
+}*/
 
 const Styles = styled.div`
   padding: 1rem;
