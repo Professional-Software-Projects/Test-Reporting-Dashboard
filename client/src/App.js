@@ -42,21 +42,11 @@ function GetReport() {
 };
 
 function App() {
-
-
     return (
-        <BrowserRouter>
-            <Switch>
-                <Router>
-                    <Routes>
-                        <Route exact path='/' element={<GetReport />}>
-                            <Route path='/:version/coreData/:result/:buildNumber([0-9]+)/:test' element={<DisplayReport />} />
-                            <Route path='/:version/metadata/:result/:buildNumber([0-9]+)/:test' element={<DisplayReport />} />
-                        </Route>
-                    </Routes>
-                </Router>
-            </Switch>
-        </BrowserRouter>
+        <Routes>
+            <Route path='/' element={<GetReport />} />
+            <Route path='/:version/coreData/:result/:buildNumber([0-9]+)?/:test?' element={<DisplayReport />} />
+        </Routes>
     );
 }
 
