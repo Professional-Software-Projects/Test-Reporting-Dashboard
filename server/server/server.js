@@ -87,31 +87,68 @@ function fetchReport(res, req, url) {
         });
 }
 
-function getPages(req, res, url, result, buildNumber, test) {
-
-    if (result === 'passed') {
-        if (buildNumber) {
-            if (test === 'testReport') {
-                fetchReport(res, req, url + 'nightlies-passed/' + buildNumber + '/testReport' + apiSuffix);
+function getPages(req, res, url, component, result, buildNumber, test) {
+    if (component === 'ui') {
+        if (result === 'passed') {
+            if (buildNumber) {
+                if (test === 'testReport') {
+                    fetchReport(res, req, url + 'integration-passed/' + buildNumber + '/testReport' + apiSuffix);
+                } else {
+                    fetchReport(res, req, url + 'integration-passed/' + buildNumber + apiSuffix);
+                }
             } else {
-                fetchReport(res, req, url + 'nightlies-passed/' + buildNumber + apiSuffix);
+                fetchReport(res, req, url + 'integration-passed' + apiSuffix);
             }
-        } else {
-            fetchReport(res, req, url + 'nightlies-passed' + apiSuffix);
+        } else if (result === 'failed') {
+            if (buildNumber) {
+                if (test === 'testReport') {
+                    fetchReport(res, req, url + 'ujs-failed/' + buildNumber + '/testReport' + apiSuffix);
+                } else {
+                    fetchReport(res, req, url + 'ujs-failed/' + buildNumber + apiSuffix);
+                }
+            } else {
+                fetchReport(res, req, url + 'ujs-failed' + apiSuffix);
+            }
         }
-    } else if (result === 'failed') {
-        if (buildNumber) {
-            if (test === 'testReport') {
-                fetchReport(res, req, url + 'nightlies-failed/' + buildNumber + '/testReport' + apiSuffix);
+        else if (result === 'inprogress') {
+            if (buildNumber) {
+                if (test === 'testReport') {
+                    fetchReport(res, req, url + 'integration-inprogress/' + buildNumber + '/testReport' + apiSuffix);
+                } else {
+                    fetchReport(res, req, url + 'integration-inprogress/' + buildNumber + apiSuffix);
+                }
             } else {
-                fetchReport(res, req, url + 'nightlies-failed/' + buildNumber + apiSuffix);
+                fetchReport(res, req, url + 'integration-inprogress' + apiSuffix);
             }
         } else {
-            fetchReport(res, req, url + 'nightlies-failed' + apiSuffix);
+            console.log(`${req.originalUrl} is invalid.`);
+            res.json({ message: `${req.originalUrl} is invalid.` });
         }
     } else {
-        console.log(`${req.originalUrl} is invalid.`);
-        res.json({ message: `${req.originalUrl} is invalid.` });
+        if (result === 'passed') {
+            if (buildNumber) {
+                if (test === 'testReport') {
+                    fetchReport(res, req, url + 'nightlies-passed/' + buildNumber + '/testReport' + apiSuffix);
+                } else {
+                    fetchReport(res, req, url + 'nightlies-passed/' + buildNumber + apiSuffix);
+                }
+            } else {
+                fetchReport(res, req, url + 'nightlies-passed' + apiSuffix);
+            }
+        } else if (result === 'failed') {
+            if (buildNumber) {
+                if (test === 'testReport') {
+                    fetchReport(res, req, url + 'nightlies-failed/' + buildNumber + '/testReport' + apiSuffix);
+                } else {
+                    fetchReport(res, req, url + 'nightlies-failed/' + buildNumber + apiSuffix);
+                }
+            } else {
+                fetchReport(res, req, url + 'nightlies-failed' + apiSuffix);
+            }
+        } else {
+            console.log(`${req.originalUrl} is invalid.`);
+            res.json({ message: `${req.originalUrl} is invalid.` });
+        }
     }
 }
 
@@ -119,30 +156,20 @@ app.get('/', (req, res) => {
     res.json(`Successful connection on port: ${port}.`);
 });
 
-// core data test report
-app.get('/:version/coreData/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
+// core data test reports
+app.get('/:component/:version/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
+    const component = req.params['component'];
     const version = req.params['version'];
     const result = req.params['result'];
     const buildNumber = req.params['buildNumber'];
     const test = req.params['test'];
-    const migratorCoreDataURL = 'http://host.docker.internal:3030/migrator-' + version + '/core-data/';
+    const url = 'http://host.docker.internal:3030/migrator-' + version + '/' + component + '/';
 
-    getPages(req, res, migratorCoreDataURL, result, buildNumber, test);
-});
-
-// metadata test report
-app.get('/:version/metadata/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
-    const version = req.params['version'];
-    const result = req.params['result'];
-    const buildNumber = req.params['buildNumber'];
-    const test = req.params['test'];
-    const migratorMetadataURL = 'http://host.docker.internal:3030/migrator-' + version + '/metadata/';
-
-    getPages(req, res, migratorMetadataURL, result, buildNumber, test);
+    getPages(req, res, url, component, result, buildNumber, test);
 });
 
 // ui test report
-app.get('/:version/ui/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
+app.get('/ui/:version/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
     const version = req.params['version'];
     const result = req.params['result'];
     const buildNumber = req.params['buildNumber'];
