@@ -51,3 +51,8 @@ td {
   border-collapse: collapse;
   vertical-align: top;
 }
+
+json {
+  float: left;
+  text-align: left;
+}

@@ -6,7 +6,6 @@ const app = express();
 import { make_API_call } from './api_caller';
 import cors from 'cors';
 import { connectToServer } from '../db_functions/conn';
-import e from 'express';
 const port = process.env.PORT || 5000;
 const pathToIndex = join(__dirname, '/../client/public');
 
@@ -15,9 +14,9 @@ const pathToIndex = join(__dirname, '/../client/public');
 app.use(json());
 app.use(cors());
 
-// to get the health report, only have the build type (nightlies-passed/)
-// to get the general report, add the build number after the build type (nightlies-passed/2/)
-// to get the overview, add 'testReport' after the build number (nightlies-passed/2/testReport)
+// to get the job data, only include the build type (nightlies-passed/)
+// to get the build report, add the build number after the build type (nightlies-passed/2/)
+// to get the test data, add 'testReport' after the build number (nightlies-passed/2/testReport)
 /*
     'http://host.docker.internal:3030/migrator-v1/core-data/nightlies-passed/api/json',                 // 0 
     'http://host.docker.internal:3030/migrator-v1/core-data/nightlies-passed/2/api/json',               // 1
@@ -88,11 +87,11 @@ function fetchReport(res, req, url) {
         });
 }
 
-function getPages(req, res, url, result, buildNumber, report) {
+function getPages(req, res, url, result, buildNumber, test) {
 
     if (result === 'passed') {
         if (buildNumber) {
-            if (report === 'testReport') {
+            if (test === 'testReport') {
                 fetchReport(res, req, url + 'nightlies-passed/' + buildNumber + '/testReport' + apiSuffix);
             } else {
                 fetchReport(res, req, url + 'nightlies-passed/' + buildNumber + apiSuffix);
@@ -102,7 +101,7 @@ function getPages(req, res, url, result, buildNumber, report) {
         }
     } else if (result === 'failed') {
         if (buildNumber) {
-            if (report === 'testReport') {
+            if (test === 'testReport') {
                 fetchReport(res, req, url + 'nightlies-failed/' + buildNumber + '/testReport' + apiSuffix);
             } else {
                 fetchReport(res, req, url + 'nightlies-failed/' + buildNumber + apiSuffix);
@@ -121,38 +120,38 @@ app.get('/', (req, res) => {
 });
 
 // core data test report
-app.get('/:version/coreData/:result/:buildNumber([0-9]+)?/:report?', (req, res) => {
+app.get('/:version/coreData/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
     const version = req.params['version'];
     const result = req.params['result'];
     const buildNumber = req.params['buildNumber'];
-    const report = req.params['report'];
+    const test = req.params['test'];
     const migratorCoreDataURL = 'http://host.docker.internal:3030/migrator-' + version + '/core-data/';
 
-    getPages(req, res, migratorCoreDataURL, result, buildNumber, report);
+    getPages(req, res, migratorCoreDataURL, result, buildNumber, test);
 });
 
 // metadata test report
-app.get('/:version/metadata/:result/:buildNumber([0-9]+)?/:report?', (req, res) => {
+app.get('/:version/metadata/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
     const version = req.params['version'];
     const result = req.params['result'];
     const buildNumber = req.params['buildNumber'];
-    const report = req.params['report'];
+    const test = req.params['test'];
     const migratorMetadataURL = 'http://host.docker.internal:3030/migrator-' + version + '/metadata/';
 
-    getPages(req, res, migratorMetadataURL, result, buildNumber, report);
+    getPages(req, res, migratorMetadataURL, result, buildNumber, test);
 });
 
 // ui test report
-app.get('/:version/ui/:result/:buildNumber([0-9]+)?/:report?', (req, res) => {
+app.get('/:version/ui/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
     const version = req.params['version'];
     const result = req.params['result'];
     const buildNumber = req.params['buildNumber'];
-    const report = req.params['report'];
+    const test = req.params['test'];
     const migratorUIURL = 'http://host.docker.internal:3030/migrator-' + version + '/ui/';
 
     if (result === 'passed') {
         if (buildNumber) {
-            if (report === 'testReport') {
+            if (test === 'testReport') {
                 fetchReport(res, req, migratorUIURL + 'integration-passed/' + buildNumber + '/testReport' + apiSuffix);
             } else {
                 fetchReport(res, req, migratorUIURL + 'integration-passed/' + buildNumber + apiSuffix);
@@ -170,7 +169,7 @@ app.get('/:version/ui/:result/:buildNumber([0-9]+)?/:report?', (req, res) => {
 
     } else if (result === 'failed') {
         if (buildNumber) {
-            if (report === 'testReport') {
+            if (test === 'testReport') {
                 fetchReport(res, req, migratorUIURL + 'ujs-failed/' + buildNumber + '/testReport' + apiSuffix);
             } else {
                 fetchReport(res, req, migratorUIURL + 'ujs-failed/' + buildNumber + apiSuffix);
