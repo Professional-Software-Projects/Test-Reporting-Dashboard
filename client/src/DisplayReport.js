@@ -8,16 +8,16 @@ function DisplayReport() {
     console.log('Calling fetch request to http://localhost:5000/' + version + '/' + component + '/' + result + '/' + buildNumber + '/' + test);
 
     useEffect(() => {
-        if (test === undefined) {
+        if (buildNumber === undefined) {
 
-            fetch('http://localhost:5000/' + version + '/' + component + '/' + result + '/' + buildNumber)
+            fetch('http://localhost:5000/' + version + '/' + component + '/' + result)
                 .then(res => res.json())
                 .then(report => getReport(report))
                 .then(console.log(`Successfully received JSON from API. Displaying to ${window.href}.`));
 
-        } else if (buildNumber === undefined) {
+        } else if (test === undefined) {
 
-            fetch('http://localhost:5000/' + version + '/' + component + '/' + result)
+            fetch('http://localhost:5000/' + version + '/' + component + '/' + result + '/' + buildNumber)
                 .then(res => res.json())
                 .then(report => getReport(report))
                 .then(console.log(`Successfully received JSON from API. Displaying to ${window.href}.`));
