@@ -28,7 +28,12 @@ function App() {
             <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
             <Route path='components/:component/:version/:result/:buildNumber/*' element={<GetReport />} />
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
-            <Route path='components' element={<ComponentView />} />
+            <Route path='components' element={
+                <div id='App'>
+                    <ComponentView component='core-data' version='v2' />
+                    <ComponentView component='metadata' version='v2' />
+                    <ComponentView component='ui' version='v2' />
+                </div>} />
             <Route exact path='/*' element={<Migrator />} />
         </Routes>
     );

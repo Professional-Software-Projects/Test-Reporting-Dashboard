@@ -42,14 +42,21 @@
   text-align: left;
 }
 
+#component {
+  text-decoration: underline;
+}
+
 #pass {
+  color: black;
   background-color: aquamarine;
 }
 
 #fail {
+  color: black;
   background-color: crimson;
 }
 
 #skip {
+  color: black;
   background-color: goldenrod;
 }

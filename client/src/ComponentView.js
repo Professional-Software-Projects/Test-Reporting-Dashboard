@@ -1,70 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function GetTestDataForComponent(component, version) {
-    console.log('Component is ' + component + '\n Version is ' + version.version + '\n');
-    const [report, getReport] = useState(null);
+function ComponentView(component) {
+    const [report, getReport] = useState(0);
+    const componentName = component.component;
+    const versionNumber = component.version;
+    let componentTitle;
 
-    console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version.version + '/passed/2/testReport');
-    fetch('http://localhost:5000/' + component + '/' + version.version + '/passed/2/testReport')
-        .then(res => res.json())
-        .then(report => getReport(report))
-        .then(console.log('Successfully received test data from API.'));
+    if (componentName === 'core-data') {
+        componentTitle = 'Migrator Core Data';
+    } else if (componentName === 'metadata') {
+        componentTitle = 'Migrator Metadata';
+    } else if (componentName === 'ui') {
+        componentTitle = 'Migrator UI'
+    }
 
-    const obj = JSON.parse(report);
+    useEffect(() => {
+        console.log('Sending fetch request to http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport');
+        fetch('http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport')
+            .then(res => res.json())
+            .then(report => getReport(report))
+            .then(console.log('Successfully received test data from API.'))
+            .catch(err => {
+                console.log('Error! Could not communicate with the API.');
+                console.log(err);
+            });
+    }, []);
 
-    const failRate = obj.failCount;
-    const passRate = obj.passCount;
-    const skipRate = obj.skipCount;
-    const rates = [failRate, passRate, skipRate];
-
-    console.log(failRate + '\n' + passRate + '\n' + skipRate + '\n');
-
-    return rates;
-}
-
-function CoreDataView(version) {
-    const rates = GetTestDataForComponent('core-data', version);
-
-    return (
-        <div id='App'>
-            <p id='pass'>Passed: {rates[1]}</p>
-            <p id='fail'>Failed: {rates[0]}</p>
-            <p id='skip'>Skipped: {rates[2]}</p>
-        </div>
-    );
-}
-
-function MetadataView(version) {
-    const rates = GetTestDataForComponent('metadata', version);
+    const failRate = report.failCount;
+    const passRate = report.passCount;
+    const skipRate = report.skipCount;
 
     return (
         <div id='App'>
-            <p id='pass'>Passed: {rates[1]}</p>
-            <p id='fail'>Failed: {rates[0]}</p>
-            <p id='skip'>Skipped: {rates[2]}</p>
-        </div>
-    );
-}
-
-function UserInterfaceView(version) {
-    const rates = GetTestDataForComponent('ui', version);
-
-    return (
-        <div id='App'>
-            <p id='pass'>Passed: {rates[1]}</p>
-            <p id='fail'>Failed: {rates[0]}</p>
-            <p id='skip'>Skipped: {rates[2]}</p>
-        </div>
-    );
-}
-
-function ComponentView() {
-    return (
-        <div>
-            <CoreDataView version='v2' />
-            <MetadataView version='v2' />
-            <UserInterfaceView version='v2' />
+            <h1 id='component'>{componentTitle}</h1>
+            <p id='pass'>Passed: {passRate}</p>
+            <p id='fail'>Failed: {failRate}</p>
+            <p id='skip'>Skipped: {skipRate}</p>
         </div>
     );
 }
