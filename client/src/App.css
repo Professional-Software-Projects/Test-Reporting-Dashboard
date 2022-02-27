@@ -41,3 +41,15 @@
   float: left;
   text-align: left;
 }
+
+#pass {
+  background-color: aquamarine;
+}
+
+#fail {
+  background-color: crimson;
+}
+
+#skip {
+  background-color: goldenrod;
+}

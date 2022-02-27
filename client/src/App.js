@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import DisplayReport from './DisplayReport';
+import Migrator from './Migrator';
+import ComponentView from './ComponentView';
+import GetReport from './GetReport';
 import './App.css';
 
 // this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
 // until this string is received, it will display the string "Loading..."
+// this function is mostly used to test and verify communication between the backend and the frontend.
 function ShowIsConnected() {
     const [isConnected, setConnected] = useState(null);
 
@@ -22,10 +25,11 @@ function ShowIsConnected() {
 function App() {
     return (
         <Routes>
-            <Route path=':version/:component/:result/:buildNumber/:test' element={<DisplayReport />} />
-            <Route path=':version/:component/:result/:buildNumber/*' element={<DisplayReport />} />
-            <Route path=':version/:component/:result/*' element={<DisplayReport />} />
-            <Route exact path='/*' element={<ShowIsConnected />} />
+            <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
+            <Route path='components/:component/:version/:result/:buildNumber/*' element={<GetReport />} />
+            <Route path='components/:component/:version/:result/*' element={<GetReport />} />
+            <Route path='components' element={<ComponentView />} />
+            <Route exact path='/*' element={<Migrator />} />
         </Routes>
     );
 }

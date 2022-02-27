@@ -1,4 +1,3 @@
-// importing packages
 require('dotenv').config({ path: './config.env' });
 import { join } from 'path';
 import express, { json } from 'express';
@@ -9,8 +8,6 @@ import { connectToServer } from '../db_functions/conn';
 const port = process.env.PORT || 5000;
 const pathToIndex = join(__dirname, '/../client/public');
 
-// any information received by the server is put through this middleware
-// which will do things such as formatting the body of a request to JSON
 app.use(json());
 app.use(cors());
 
@@ -29,7 +26,8 @@ function fetchReport(res, req, url) {
         });
 }
 
-function getPages(req, res, url, component, result, buildNumber, test) {
+// check the various parameters and use them to build the fetch request
+function buildFetchRequest(req, res, url, component, result, buildNumber, test) {
     if (component === 'ui') {
         if (result === 'passed') {
             if (buildNumber) {
@@ -94,22 +92,33 @@ function getPages(req, res, url, component, result, buildNumber, test) {
     }
 }
 
+// for testing connection and verifying that json data can be sent to the frontend
 app.get('/', (req, res) => {
     res.json(`Successful connection on port: ${port}.`);
 });
 
-// core data test reports
-app.get('/:component/:version/:result/:buildNumber([0-9]+)?/:test?', (req, res) => {
-    const component = req.params['component'];
-    const version = req.params['version'];
-    const result = req.params['result'];
-    const buildNumber = req.params['buildNumber'];
-    const test = req.params['test'];
+// enter in the url, and the parameters will be extracted and used to build the api fetch request
+app.get('/:component/:version/:result/:buildNumber([1-9]+)?/:test?', (req, res) => {
+
+    // required parameters
+    const component = req.params['component'];      // core-data, metadata, ui
+    const version = req.params['version'];          // v1, v2
+    const result = req.params['result'];            // passed, failed, inprogress (ui only)
+
+    // optional parameters
+    const buildNumber = req.params['buildNumber'];  // at least one number
+    const test = req.params['test'];                // testReport
+
     const url = 'http://host.docker.internal:3030/migrator-' + version + '/' + component + '/';
 
-    getPages(req, res, url, component, result, buildNumber, test);
+    // component needs to be passed in because the ui component has different names for builds
+    // core-data and metadata use 'nightlies-passed'/'nightlies-failed'
+    // ui uses 'integration-passed'/'integration-inprogress' and 'ujs-failed'
+    // this means we need to check for the ui component so that the correct build name will be entered into the fetch request
+    buildFetchRequest(req, res, url, component, result, buildNumber, test);
 });
 
+// start the server
 app.listen(port, () => {
     connectToServer(function (err) {
         if (err) console.error(err);
