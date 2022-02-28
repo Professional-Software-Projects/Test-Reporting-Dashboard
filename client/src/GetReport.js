@@ -8,7 +8,7 @@ function GetReport() {
 
     useEffect(() => {
         if (buildNumber === undefined) {
-            console.log('Calling fetch request to http://localhost:5000/' + component + '/' + version + '/' + result);
+            console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version + '/' + result);
             fetch('http://localhost:5000/' + component + '/' + version + '/' + result)
                 .then(res => res.json())
                 .then(report => getReport(report))
@@ -19,7 +19,7 @@ function GetReport() {
                 });
 
         } else if (test === undefined) {
-            console.log('Calling fetch request to http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber);
+            console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber);
             fetch('http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber)
                 .then(res => res.json())
                 .then(report => getReport(report))
@@ -30,7 +30,7 @@ function GetReport() {
                 });
 
         } else {
-            console.log('Calling fetch request to http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber + '/' + test);
+            console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber + '/' + test);
             fetch('http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber + '/' + test)
                 .then(res => res.json())
                 .then(report => getReport(report))

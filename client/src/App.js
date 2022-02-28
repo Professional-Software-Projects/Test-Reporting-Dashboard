@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Migrator from './Migrator';
+import MigratorView from './MigratorView';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
 import './App.css';
@@ -15,13 +15,11 @@ function ShowIsConnected() {
         .then(res => res.json())
         .then(connection => setConnected(connection));
 
-    return (
-        <div className='App'>
-            <p>{isConnected ? isConnected : "Loading..."}</p>
-        </div>
-    );
-};
 
+    console.log(isConnected ? isConnected : "Loading...");
+}
+
+// TODO: Implement routes to view the LiveData Migrator version 1 test reports
 function App() {
     return (
         <Routes>
@@ -34,7 +32,7 @@ function App() {
                     <ComponentView component='metadata' version='v2' />
                     <ComponentView component='ui' version='v2' />
                 </div>} />
-            <Route exact path='/*' element={<Migrator />} />
+            <Route exact path='/*' element={<MigratorView />} />
         </Routes>
     );
 }

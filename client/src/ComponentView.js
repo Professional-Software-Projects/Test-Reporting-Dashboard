@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
 
 function ComponentView(component) {
@@ -33,11 +34,24 @@ function ComponentView(component) {
 
     return (
         <div id='App'>
-            <h1 id='component'>{componentTitle}</h1>
-            <p id='pass'>Passed: {passRate}</p>
-            <p id='fail'>Failed: {failRate}</p>
-            <p id='skip'>Skipped: {skipRate}</p>
+            <h1 id='component'>LiveData {componentTitle}</h1>
+            <p id='pass'>Tests Passed: {passRate}</p>
+            <p id='fail'>Tests Failed: {failRate}</p>
+            <p id='skip'>Tests Skipped: {skipRate}</p>
+            <div id='App'>
+                <p>Click the button below to view a more detailed reports of {componentName}</p>
+                <Link to={'/components/' + componentName + '/v2/passed'}>
+                    <button>{componentTitle} Health Report</button>
+                </Link>
+                <Link to={'/components/' + componentName + '/v2/passed/2'}>
+                    <button>{componentTitle} Build Data</button>
+                </Link>
+                <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
+                    <button>{componentTitle} Test Report</button>
+                </Link>
+            </div>
         </div>
+
     );
 }
 
