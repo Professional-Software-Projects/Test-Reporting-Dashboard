@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Pie } from 'react-chartjs-2';
+import 'chart.js/auto';
 import './App.css';
 
 function MigratorView() {
@@ -7,32 +9,76 @@ function MigratorView() {
     const [metadataReport, getMetadataReport] = useState(0);
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
 
-
     useEffect(() => {
+        let isSubscribed = true;
 
         console.log('Sending fetch request to http://localhost:5000/core-data/v2/passed/2/testReport');
         fetch('http://localhost:5000/core-data/v2/passed/2/testReport')
             .then(res => res.json())
-            .then(coreDataReport => getCoreDataReport(coreDataReport))
+            .then(coreDataReport => {
+                if (isSubscribed) {
+                    getCoreDataReport(coreDataReport);
+                }
+            })
             .then(console.log('Successfully received core data report.'));
 
         console.log('Sending fetch request to http://localhost:5000/metadata/v2/passed/2/testReport');
         fetch('http://localhost:5000/metadata/v2/passed/2/testReport')
             .then(res => res.json())
-            .then(metadataReport => getMetadataReport(metadataReport))
+            .then(metadataReport => {
+                if (isSubscribed) {
+                    getMetadataReport(metadataReport);
+                }
+            })
             .then(console.log('Successfully received metadata report.'));
 
         console.log('Sending fetch request to http://localhost:5000/ui/v2/passed/2/testReport');
         fetch('http://localhost:5000/ui/v2/passed/2/testReport')
             .then(res => res.json())
-            .then(userInterfaceReport => getUserInterfaceReport(userInterfaceReport))
+            .then(userInterfaceReport => {
+                if (isSubscribed) {
+                    getUserInterfaceReport(userInterfaceReport);
+                }
+            })
             .then(console.log('Successfully received UI report.'));
 
+        return () => isSubscribed = false;
     }, []);
 
     const passCount = coreDataReport.passCount + metadataReport.passCount + userInterfaceReport.passCount;
     const failCount = coreDataReport.failCount + metadataReport.failCount + userInterfaceReport.failCount;
     const skipCount = coreDataReport.skipCount + metadataReport.skipCount + userInterfaceReport.skipCount;
+
+    const data = {
+        labels: ['Passed', 'Failed', 'Skipped'],
+        datasets: [{
+            label: 'Test Pass Rate',
+            data: [passCount, failCount, skipCount],
+            backgroundColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                ticks: {
+                    beginAtZero: true
+                },
+            },
+        },
+    }
 
     return (
         <div id='App'>
@@ -41,6 +87,10 @@ function MigratorView() {
             <p>Total Tests Passed: {passCount}</p>
             <p>Total Tests Failed: {failCount}</p>
             <p>Total Tests Skipped: {skipCount}</p>
+
+            <div>
+                <Pie data={data} height={400} width={600} options={options} />
+            </div>
 
             <div id='App'>
                 <Link to='components'>
@@ -51,19 +101,12 @@ function MigratorView() {
     );
 }
 
-function GetProductHealth(passCount, failCount, skipCount) {
-    let passCountInt = passCount.passCount;
-    let failCountInt = passCount.failCount;
-
-    if (passCountInt > failCountInt) {
-        console.log(passCountInt + ' true');
-        console.log(failCountInt + ' true');
+function GetProductHealth({ passCount, failCount, skipCount }) {
+    if (passCount > failCount) {
         return <h2>Product health is <span id='pass'>good!</span></h2>
     } else {
-        console.log(passCountInt + ' false');
-        console.log(failCountInt + ' false');
         return <h2>Product health is <span id='fail'>poor.</span></h2>
     }
 }
 
-export { MigratorView as default }
+export { MigratorView as default };

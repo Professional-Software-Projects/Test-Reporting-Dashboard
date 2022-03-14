@@ -13,8 +13,7 @@ function ShowIsConnected() {
 
     fetch('http://localhost:5000')
         .then(res => res.json())
-        .then(connection => setConnected(connection));
-
+        .then(setConnected);
 
     console.log(isConnected ? isConnected : "Loading...");
 }

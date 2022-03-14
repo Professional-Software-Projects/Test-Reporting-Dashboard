@@ -13,20 +13,20 @@ function ComponentView(component) {
     } else if (componentName === 'metadata') {
         componentTitle = 'Migrator Metadata';
     } else if (componentName === 'ui') {
-        componentTitle = 'Migrator UI'
+        componentTitle = 'Migrator UI';
     }
 
     useEffect(() => {
         console.log('Sending fetch request to http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport');
         fetch('http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport')
             .then(res => res.json())
-            .then(report => getReport(report))
+            .then(getReport)
             .then(console.log('Successfully received test data from API.'))
             .catch(err => {
                 console.log('Error! Could not communicate with the API.');
                 console.log(err);
             });
-    }, []);
+    }, [componentName, versionNumber]);
 
     const failRate = report.failCount;
     const passRate = report.passCount;
@@ -51,7 +51,6 @@ function ComponentView(component) {
                 </Link>
             </div>
         </div>
-
     );
 }
 

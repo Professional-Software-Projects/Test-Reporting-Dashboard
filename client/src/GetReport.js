@@ -11,7 +11,7 @@ function GetReport() {
             console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version + '/' + result);
             fetch('http://localhost:5000/' + component + '/' + version + '/' + result)
                 .then(res => res.json())
-                .then(report => getReport(report))
+                .then(getReport)
                 .then(console.log(`Successfully received job data from API.`))
                 .catch(err => {
                     console.log('Error! Could not communicate with the API.');
@@ -22,7 +22,7 @@ function GetReport() {
             console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber);
             fetch('http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber)
                 .then(res => res.json())
-                .then(report => getReport(report))
+                .then(getReport)
                 .then(console.log(`Successfully received build data from API.`))
                 .catch(err => {
                     console.log('Error! Could not communicate with the API.');
@@ -33,7 +33,7 @@ function GetReport() {
             console.log('Sending fetch request to http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber + '/' + test);
             fetch('http://localhost:5000/' + component + '/' + version + '/' + result + '/' + buildNumber + '/' + test)
                 .then(res => res.json())
-                .then(report => getReport(report))
+                .then(getReport)
                 .then(console.log(`Successfully received test data from API.`))
                 .catch(err => {
                     console.log('Error! Could not communicate with the API.');
