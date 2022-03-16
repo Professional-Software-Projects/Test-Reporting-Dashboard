@@ -118,9 +118,14 @@ app.get('/:component/:version/:result/:buildNumber([1-9]+)?/:test?', (req, res) 
 
 // start the server
 app.listen(port, () => {
-    connectToServer(function (err) {
-        if (err) console.error(err);
-    });
+    try {
+        connectToServer(function (err) {
+            if (err) console.error(err);
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+        console.log(`Server is running on port: ${port}`);
+    }
 
-    console.log(`Server is running on port: ${port}`);
 });

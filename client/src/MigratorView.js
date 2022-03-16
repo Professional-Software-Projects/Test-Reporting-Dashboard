@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import './App.css';
+import './style/App.css';
 
 function MigratorView() {
     const [coreDataReport, getCoreDataReport] = useState(0);
@@ -71,13 +71,6 @@ function MigratorView() {
     const options = {
         responsive: true,
         maintainAspectRatio: false,
-        scales: {
-            y: {
-                ticks: {
-                    beginAtZero: true
-                },
-            },
-        },
     }
 
     return (

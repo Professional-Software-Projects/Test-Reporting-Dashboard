@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MigratorView from './MigratorView';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
-import './App.css';
+import './style/App.css';
 
 // this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
 // until this string is received, it will display the string "Loading..."

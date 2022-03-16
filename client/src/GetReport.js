@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import './App.css';
+import './style/App.css';
 
 function GetReport() {
     const [report, getReport] = useState(0);
