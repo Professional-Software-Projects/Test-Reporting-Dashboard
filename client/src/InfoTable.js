@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTable } from 'react-table'
 import { COLUMNS } from './Columns'
-import './style/App.css'
+import './style/report.css'
 
 
 

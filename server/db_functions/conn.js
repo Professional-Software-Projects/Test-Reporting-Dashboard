@@ -1,5 +1,4 @@
 import { MongoClient } from 'mongodb';
-import { equal } from 'assert';
 
 // get connection string
 const connString = 'mongodb://mongo:27017';
@@ -10,7 +9,7 @@ var _db;
 export function connectToServer(callback) {
     MongoClient.connect(connString, { useNewUrlParser: true }, function (err, client) {
         if (err) {
-            console.log('Error connecting to the database.');
+            console.log('Error connecting to the database. ');
             console.log(err);
         } else {
             // will only return this message if connection is made

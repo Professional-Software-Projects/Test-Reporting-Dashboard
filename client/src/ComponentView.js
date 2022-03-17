@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './style/App.css';
+import './style/report.css';
 
 function ComponentView(component) {
     const [report, getReport] = useState(0);
@@ -17,15 +17,23 @@ function ComponentView(component) {
     }
 
     useEffect(() => {
+        let isMounted = true;
+
         console.log('Sending fetch request to http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport');
         fetch('http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport')
             .then(res => res.json())
-            .then(getReport)
+            .then(report => {
+                if (isMounted) {
+                    getReport(report);
+                }
+            })
             .then(console.log('Successfully received test data from API.'))
             .catch(err => {
                 console.log('Error! Could not communicate with the API.');
                 console.log(err);
             });
+
+        return () => isMounted = false;
     }, [componentName, versionNumber]);
 
     const failRate = report.failCount;
@@ -33,12 +41,12 @@ function ComponentView(component) {
     const skipRate = report.skipCount;
 
     return (
-        <div id='App'>
+        <div id='report'>
             <h1 id='component'>LiveData {componentTitle}</h1>
             <p id='pass'>Tests Passed: {passRate}</p>
             <p id='fail'>Tests Failed: {failRate}</p>
             <p id='skip'>Tests Skipped: {skipRate}</p>
-            <div id='App'>
+            <div id='report'>
                 <p>Click the button below to view a more detailed reports of {componentName}</p>
                 <Link to={'/components/' + componentName + '/v2/passed'}>
                     <button>{componentTitle} Health Report</button>

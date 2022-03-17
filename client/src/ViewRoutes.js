@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MigratorView from './MigratorView';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
-import './style/App.css';
+import './style/report.css';
 
 // this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
 // until this string is received, it will display the string "Loading..."
@@ -19,14 +19,14 @@ function ShowIsConnected() {
 }
 
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
-function App() {
+function ViewRoutes() {
     return (
         <Routes>
             <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
             <Route path='components/:component/:version/:result/:buildNumber/*' element={<GetReport />} />
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
             <Route path='components' element={
-                <div id='App'>
+                <div id='report'>
                     <ComponentView component='core-data' version='v2' />
                     <ComponentView component='metadata' version='v2' />
                     <ComponentView component='ui' version='v2' />
@@ -36,4 +36,4 @@ function App() {
     );
 }
 
-export { App as default };
+export { ViewRoutes as default };

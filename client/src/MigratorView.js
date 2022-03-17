@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import './style/App.css';
+import './style/report.css';
 
 function MigratorView() {
     const [coreDataReport, getCoreDataReport] = useState(0);
@@ -10,13 +10,13 @@ function MigratorView() {
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
 
     useEffect(() => {
-        let isSubscribed = true;
+        let isMounted = true;
 
         console.log('Sending fetch request to http://localhost:5000/core-data/v2/passed/2/testReport');
         fetch('http://localhost:5000/core-data/v2/passed/2/testReport')
             .then(res => res.json())
             .then(coreDataReport => {
-                if (isSubscribed) {
+                if (isMounted) {
                     getCoreDataReport(coreDataReport);
                 }
             })
@@ -26,7 +26,7 @@ function MigratorView() {
         fetch('http://localhost:5000/metadata/v2/passed/2/testReport')
             .then(res => res.json())
             .then(metadataReport => {
-                if (isSubscribed) {
+                if (isMounted) {
                     getMetadataReport(metadataReport);
                 }
             })
@@ -36,13 +36,13 @@ function MigratorView() {
         fetch('http://localhost:5000/ui/v2/passed/2/testReport')
             .then(res => res.json())
             .then(userInterfaceReport => {
-                if (isSubscribed) {
+                if (isMounted) {
                     getUserInterfaceReport(userInterfaceReport);
                 }
             })
             .then(console.log('Successfully received UI report.'));
 
-        return () => isSubscribed = false;
+        return () => isMounted = false;
     }, []);
 
     const passCount = coreDataReport.passCount + metadataReport.passCount + userInterfaceReport.passCount;
@@ -74,7 +74,7 @@ function MigratorView() {
     }
 
     return (
-        <div id='App'>
+        <div id='report'>
             <h1>LiveData Migrator Test Reporting Dashboard</h1>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
             <p>Total Tests Passed: {passCount}</p>
@@ -85,7 +85,7 @@ function MigratorView() {
                 <Pie data={data} height={400} width={600} options={options} />
             </div>
 
-            <div id='App'>
+            <div id='report'>
                 <Link to='components'>
                     <p>Click here for the individual pass rates of each component.</p>
                 </Link>
