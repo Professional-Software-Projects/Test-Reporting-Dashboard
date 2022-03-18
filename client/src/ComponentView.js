@@ -49,13 +49,13 @@ function ComponentView(component) {
             <div id='report'>
                 <p>Click the button below to view a more detailed reports of {componentName}</p>
                 <Link to={'/components/' + componentName + '/v2/passed'}>
-                    <button>{componentTitle} Health Report</button>
+                    <button type="button" class="btn btn-feature">{componentTitle} Health Report</button>
                 </Link>
                 <Link to={'/components/' + componentName + '/v2/passed/2'}>
-                    <button>{componentTitle} Build Data</button>
+                    <button type="button" class="btn btn-feature">{componentTitle} Build Data</button>
                 </Link>
                 <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
-                    <button>{componentTitle} Test Report</button>
+                    <button type='button' class="btn btn-feature">{componentTitle} Test Report</button>
                 </Link>
             </div>
         </div>

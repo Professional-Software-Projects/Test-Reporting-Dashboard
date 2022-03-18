@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import MigratorView from './MigratorView';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
@@ -27,6 +27,9 @@ function ViewRoutes() {
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
             <Route path='components' element={
                 <div id='report'>
+                    <Link to='/'>
+                        <button type="button" class="btn btn-feature">View Rolled Up Test Results</button>
+                    </Link>
                     <ComponentView component='core-data' version='v2' />
                     <ComponentView component='metadata' version='v2' />
                     <ComponentView component='ui' version='v2' />

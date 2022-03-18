@@ -81,15 +81,16 @@ function MigratorView() {
             <p>Total Tests Failed: {failCount}</p>
             <p>Total Tests Skipped: {skipCount}</p>
 
+            <div id='report'>
+                <Link to='components'>
+                    <button type="button" class="btn btn-feature">View Individual Results of all Components</button>
+                </Link>
+            </div>
+
             <div>
                 <Pie data={data} height={400} width={600} options={options} />
             </div>
 
-            <div id='report'>
-                <Link to='components'>
-                    <p>Click here for the individual pass rates of each component.</p>
-                </Link>
-            </div>
         </div>
     );
 }
