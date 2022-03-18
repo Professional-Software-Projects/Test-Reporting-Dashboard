@@ -19,15 +19,23 @@ function ComponentView(component) {
     }
 
     useEffect(() => {
+        let isMounted = true;
+
         console.log('Sending fetch request to http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport');
         fetch('http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport')
             .then(res => res.json())
-            .then(getReport)
+            .then(report => {
+                if (isMounted) {
+                    getReport(report);
+                }
+            })
             .then(console.log('Successfully received test data from API.'))
             .catch(err => {
                 console.log('Error! Could not communicate with the API.');
                 console.log(err);
             });
+
+        return () => isMounted = false;
     }, [componentName, versionNumber]);
 
     const failCount = report.failCount;
@@ -66,24 +74,21 @@ function ComponentView(component) {
     }
 
     return (
-        <div id='App'>
+        <div id='report'>
             <h1 id='component'>LiveData {componentTitle}</h1>
             <p id='pass'>Tests Passed: {passCount}</p>
             <p id='fail'>Tests Failed: {failCount}</p>
             <p id='skip'>Tests Skipped: {skipCount}</p>
-            <div>
-                <Pie data={data} height={400} width={600} options={options} />
-            </div>
-            <div id='App'>
+            <div id='report'>
                 <p>Click the button below to view a more detailed reports of {componentName}</p>
                 <Link to={'/components/' + componentName + '/v2/passed'}>
-                    <button>{componentTitle} Health Report</button>
+                    <button type="button" class="btn btn-feature">{componentTitle} Health Report</button>
                 </Link>
                 <Link to={'/components/' + componentName + '/v2/passed/2'}>
-                    <button>{componentTitle} Build Data</button>
+                    <button type="button" class="btn btn-feature">{componentTitle} Build Data</button>
                 </Link>
                 <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
-                    <button>{componentTitle} Test Report</button>
+                    <button type='button' class="btn btn-feature">{componentTitle} Test Report</button>
                 </Link>
             </div>
         </div>

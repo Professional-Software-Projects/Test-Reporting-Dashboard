@@ -1,3 +1,15 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/mixins/buttons";
+
+$button-colour: #cccccc;
+$border-colour: #e26600;
+
+h1 {
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: center;
+}
+
 body {
   background: #333;
   color: #fff;
@@ -18,22 +30,29 @@ code {
 .topnav {
   background-color: whitesmoke;
   overflow: hidden;
+
+  a {
+    float: left;
+    color: grey;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+
+    :hover {
+      background-color: #ddd;
+      color: black;
+    }
+  }
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: grey;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
+.btn-feature {
+  background-color: $button-colour;
+  @include button-variant(
+    $button-colour,
+    darken($border-colour, 50%),
+    darken($border-colour, 100%)
+  );
 }
 
 .table {
@@ -50,9 +69,4 @@ td {
   border: 3px solid #f89a1f;
   border-collapse: collapse;
   vertical-align: top;
-}
-
-json {
-  float: left;
-  text-align: left;
 }

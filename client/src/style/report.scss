@@ -1,0 +1,21 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+#json {
+  float: left;
+  text-align: left;
+}
+
+#pass {
+  color: black;
+  background-color: aquamarine;
+}
+
+#fail {
+  color: black;
+  background-color: crimson;
+}
+
+#skip {
+  color: black;
+  background-color: goldenrod;
+}
