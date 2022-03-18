@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Pie } from 'react-chartjs-2';
+import 'chart.js/auto'
 import './App.css';
 
 function ComponentView(component) {
@@ -28,16 +30,50 @@ function ComponentView(component) {
             });
     }, [componentName, versionNumber]);
 
-    const failRate = report.failCount;
-    const passRate = report.passCount;
-    const skipRate = report.skipCount;
+    const failCount = report.failCount;
+    const passCount = report.passCount;
+    const skipCount = report.skipCount;
+
+    const data = {
+        labels: ['Passed', 'Failed', 'Skipped'],
+        datasets: [{
+            label: 'Test Pass Rate',
+            data: [passCount, failCount, skipCount],
+            backgroundColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                ticks: {
+                    beginAtZero: true
+                },
+            },
+        },
+    }
 
     return (
         <div id='App'>
             <h1 id='component'>LiveData {componentTitle}</h1>
-            <p id='pass'>Tests Passed: {passRate}</p>
-            <p id='fail'>Tests Failed: {failRate}</p>
-            <p id='skip'>Tests Skipped: {skipRate}</p>
+            <p id='pass'>Tests Passed: {passCount}</p>
+            <p id='fail'>Tests Failed: {failCount}</p>
+            <p id='skip'>Tests Skipped: {skipCount}</p>
+            <div>
+                <Pie data={data} height={400} width={600} options={options} />
+            </div>
             <div id='App'>
                 <p>Click the button below to view a more detailed reports of {componentName}</p>
                 <Link to={'/components/' + componentName + '/v2/passed'}>
