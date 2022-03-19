@@ -107,7 +107,7 @@ app.get('/:component/:version/:result/:buildNumber([1-9]+)?/:test?', (req, res) 
     const buildNumber = req.params['buildNumber'];  // at least one number
     const test = req.params['test'];                // testReport
 
-    const url = 'http://localhost:3030/migrator-' + version + '/' + component + '/';
+    const url = 'http://host.docker.internal:3030/migrator-' + version + '/' + component + '/';
 
     // component needs to be passed in because the ui component has different names for builds
     // core-data and metadata use 'nightlies-passed'/'nightlies-failed'

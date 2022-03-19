@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
+import getChart from './PieChartTemplate.js';
+import './style/page.css';
 import './style/report.css';
+
+/* TODO: implement a function to add a component to the page
+         parameters: component type (single component or all components), version number (v1 or v2), result (passed, failed or skipped)
+         the given parameters will then be used to build a url to fetch reports
+         then a display can be created from this, which will then be returned back to the page for the user
+*/
 
 function MigratorView() {
     const [coreDataReport, getCoreDataReport] = useState(0);
@@ -49,46 +57,26 @@ function MigratorView() {
     const failCount = coreDataReport.failCount + metadataReport.failCount + userInterfaceReport.failCount;
     const skipCount = coreDataReport.skipCount + metadataReport.skipCount + userInterfaceReport.skipCount;
 
-    const data = {
-        labels: ['Passed', 'Failed', 'Skipped'],
-        datasets: [{
-            label: 'Test Pass Rate',
-            data: [passCount, failCount, skipCount],
-            backgroundColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-            ],
-            borderWidth: 1
-        }]
-    };
+    const buildTime = coreDataReport.duration + metadataReport.duration + userInterfaceReport.duration;
 
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-    }
+    const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
-        <div id='report'>
+        <div id='body'>
             <h1>LiveData Migrator Test Reporting Dashboard</h1>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
+            <div id='body'>
+                <Link to='components'>
+                    <button type="button" class="btn btn-feature">View Test Results for Individual Components</button>
+                </Link>
+            </div>
+            <p>Total Build Time: {(Math.round(buildTime * 1000) / 1000).toFixed(3)} seconds</p>
             <p>Total Tests Passed: {passCount}</p>
             <p>Total Tests Failed: {failCount}</p>
             <p>Total Tests Skipped: {skipCount}</p>
 
-            <div id='report'>
-                <Link to='components'>
-                    <button type="button" class="btn btn-feature">View Individual Results of all Components</button>
-                </Link>
-            </div>
-
             <div>
-                <Pie data={data} height={400} width={600} options={options} />
+                <Pie data={data} height={400} width={400} options={options} />
             </div>
 
         </div>
@@ -96,10 +84,17 @@ function MigratorView() {
 }
 
 function GetProductHealth({ passCount, failCount, skipCount }) {
-    if (passCount > failCount) {
+    let totalTests = passCount + failCount + skipCount;
+    let passRate = totalTests / passCount;
+
+    if ((passRate * 100) >= 99) {
         return <h2>Product health is <span id='pass'>good!</span></h2>
-    } else {
+    } else if ((passRate * 100) > 92 && (passRate * 100) < 99) {
+        return <h2>Product health is <span id='mediocre'>acceptable.</span></h2>
+    } else if ((passRate * 100) < 92) {
         return <h2>Product health is <span id='fail'>poor.</span></h2>
+    } else {
+        return <h2>Cannot get product health!</h2>
     }
 }
 

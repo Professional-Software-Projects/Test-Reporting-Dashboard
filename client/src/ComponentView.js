@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto'
-import './App.css';
+import getChart from './PieChartTemplate.js';
+import './style/report.css';
 
 function ComponentView(component) {
     const [report, getReport] = useState(0);
@@ -41,46 +42,22 @@ function ComponentView(component) {
     const failCount = report.failCount;
     const passCount = report.passCount;
     const skipCount = report.skipCount;
+    const buildTime = report.duration;
 
-    const data = {
-        labels: ['Passed', 'Failed', 'Skipped'],
-        datasets: [{
-            label: 'Test Pass Rate',
-            data: [passCount, failCount, skipCount],
-            backgroundColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-            ],
-            borderWidth: 1
-        }]
-    };
-
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                ticks: {
-                    beginAtZero: true
-                },
-            },
-        },
-    }
+    const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
         <div id='report'>
             <h1 id='component'>LiveData {componentTitle}</h1>
+            <p>Build Time: {(Math.round(buildTime * 1000) / 1000).toFixed(3)}</p>
             <p id='pass'>Tests Passed: {passCount}</p>
             <p id='fail'>Tests Failed: {failCount}</p>
             <p id='skip'>Tests Skipped: {skipCount}</p>
+            <div>
+                <Pie data={data} height={200} width={200} options={options} />
+            </div>
             <div id='report'>
-                <p>Click the button below to view a more detailed reports of {componentName}</p>
+                <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
                 <Link to={'/components/' + componentName + '/v2/passed'}>
                     <button type="button" class="btn btn-feature">{componentTitle} Health Report</button>
                 </Link>
