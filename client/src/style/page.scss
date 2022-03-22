@@ -1,10 +1,11 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../../node_modules/bootstrap/scss/mixins/buttons";
 
-$button-colour: #cccccc;
-$border-colour: #e26600;
+$button-colour: #dfdfdf;
+$border-colour: #ec7700;
 
-h1 {
+h1,
+h2 {
   font-weight: bold;
   text-decoration: underline;
   text-align: center;
@@ -26,7 +27,35 @@ code {
     monospace;
 }
 
-/* Add a black background color to the top navigation */
+#wrapper {
+  display: flex;
+  width: 500px;
+  margin: 0 auto;
+  align-content: center;
+  position: relative;
+
+  div {
+    width: 50%;
+    top: 1%;
+  }
+
+  p {
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: center;
+    font-size: larger;
+    width: 50%;
+  }
+
+  span {
+    font-size: x-large;
+    font-weight: bolder;
+  }
+}
+
 .topnav {
   background-color: whitesmoke;
   overflow: hidden;
@@ -46,12 +75,13 @@ code {
   }
 }
 
-.btn-feature {
-  background-color: $button-colour;
+button.btn-default {
+  border-width: thick;
+  width: auto;
   @include button-variant(
     $button-colour,
-    darken($border-colour, 50%),
-    darken($border-colour, 100%)
+    $border-colour,
+    darken($border-colour, 50%)
   );
 }
 

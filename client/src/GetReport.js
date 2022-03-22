@@ -18,7 +18,6 @@ function GetReport() {
                         getReport(report);
                     }
                 })
-                .then(console.log(`Successfully received job data from API.`))
                 .catch(err => {
                     console.log('Error! Could not communicate with the API.');
                     console.log(err);
@@ -33,7 +32,6 @@ function GetReport() {
                         getReport(report);
                     }
                 })
-                .then(console.log(`Successfully received build data from API.`))
                 .catch(err => {
                     console.log('Error! Could not communicate with the API.');
                     console.log(err);
@@ -48,7 +46,6 @@ function GetReport() {
                         getReport(report);
                     }
                 })
-                .then(console.log(`Successfully received test data from API.`))
                 .catch(err => {
                     console.log('Error! Could not communicate with the API.');
                     console.log(err);
@@ -59,7 +56,7 @@ function GetReport() {
     }, [version, component, result, buildNumber, test]);
 
     return (
-        <div class='report'>
+        <div className='report'>
             <pre id='json'>{JSON.stringify(report, null, 4)}</pre>
         </div>
     );

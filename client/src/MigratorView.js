@@ -28,7 +28,10 @@ function MigratorView() {
                     getCoreDataReport(coreDataReport);
                 }
             })
-            .then(console.log('Successfully received core data report.'));
+            .catch(err => {
+                console.log('Error! Could not communicate with the API.');
+                console.log(err);
+            });
 
         console.log('Sending fetch request to http://localhost:5000/metadata/v2/passed/2/testReport');
         fetch('http://localhost:5000/metadata/v2/passed/2/testReport')
@@ -38,7 +41,10 @@ function MigratorView() {
                     getMetadataReport(metadataReport);
                 }
             })
-            .then(console.log('Successfully received metadata report.'));
+            .catch(err => {
+                console.log('Error! Could not communicate with the API.');
+                console.log(err);
+            });
 
         console.log('Sending fetch request to http://localhost:5000/ui/v2/passed/2/testReport');
         fetch('http://localhost:5000/ui/v2/passed/2/testReport')
@@ -48,8 +54,10 @@ function MigratorView() {
                     getUserInterfaceReport(userInterfaceReport);
                 }
             })
-            .then(console.log('Successfully received UI report.'));
-
+            .catch(err => {
+                console.log('Error! Could not communicate with the API.');
+                console.log(err);
+            });
         return () => isMounted = false;
     }, []);
 
@@ -62,21 +70,25 @@ function MigratorView() {
     const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
-        <div id='body'>
+        <div id='body' className='container'>
             <h1>LiveData Migrator Test Reporting Dashboard</h1>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
+
             <div id='body'>
                 <Link to='components'>
-                    <button type="button" class="btn btn-feature">View Test Results for Individual Components</button>
+                    <button type="button" className="btn btn-default">View Test Results for Individual Components</button>
                 </Link>
             </div>
-            <p>Total Build Time: {(Math.round(buildTime * 1000) / 1000).toFixed(3)} seconds</p>
-            <p>Total Tests Passed: {passCount}</p>
-            <p>Total Tests Failed: {failCount}</p>
-            <p>Total Tests Skipped: {skipCount}</p>
 
-            <div>
-                <Pie data={data} height={400} width={400} options={options} />
+            <div id='wrapper'>
+                <p>Total Tests Passed: <span id='pass'>{passCount}</span></p>
+                <p>Total Tests Failed: <span id='fail'>{failCount}</span></p>
+                <p>Total Tests Skipped: <span id='skip'>{skipCount}</span></p>
+                <p>Total Build Time: <span>{(Math.round(buildTime * 1000) / 1000).toFixed(3)} seconds</span></p>
+            </div>
+
+            <div id='wrapper'>
+                <Pie data={data} height={300} width={300} options={options} />
             </div>
 
         </div>
@@ -98,4 +110,4 @@ function GetProductHealth({ passCount, failCount, skipCount }) {
     }
 }
 
-export { MigratorView as default };
+export { MigratorView as default, GetProductHealth };

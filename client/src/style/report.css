@@ -11963,14 +11963,15 @@ fieldset:disabled .btn {
 }
 
 #pass {
-  color: aquamarine;
+  color: #36a2eb;
 }
 
-#mediocre {
-  color: goldenrod;
+#mediocre,
+#skip {
+  color: #ffce56;
 }
 
 #fail {
-  color: crimson;
+  color: #ff6384;
 }
 /*# sourceMappingURL=report.css.map */

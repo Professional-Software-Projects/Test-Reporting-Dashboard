@@ -11957,7 +11957,7 @@ fieldset:disabled .btn {
   }
 }
 
-h1, .h1 {
+h1, .h1, h2, .h2 {
   font-weight: bold;
   text-decoration: underline;
   text-align: center;
@@ -11976,7 +11976,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-/* Add a black background color to the top navigation */
+#wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 500px;
+  margin: 0 auto;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  position: relative;
+}
+
+#wrapper div {
+  width: 50%;
+  top: 1%;
+}
+
+#wrapper p {
+  margin-top: 1%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2%;
+  padding-right: 2%;
+  text-align: center;
+  font-size: larger;
+  width: 50%;
+}
+
+#wrapper span {
+  font-size: x-large;
+  font-weight: bolder;
+}
+
 .topnav {
   background-color: whitesmoke;
   overflow: hidden;
@@ -11996,46 +12027,47 @@ code {
   color: black;
 }
 
-.btn-feature {
-  background-color: #cccccc;
+button.btn-default {
+  border-width: thick;
+  width: auto;
   color: black;
-  background-color: #cccccc;
-  border-color: black;
+  background-color: #dfdfdf;
+  border-color: #ec7700;
 }
 
-.btn-feature:hover {
+button.btn-default:hover {
   color: #000;
-  background-color: #d4d4d4;
-  border-color: #1a1a1a;
+  background-color: #e4e4e4;
+  border-color: #ee851a;
 }
 
-.btn-check:focus + .btn-feature, .btn-feature:focus {
+.btn-check:focus + button.btn-default, button.btn-default:focus {
   color: #000;
-  background-color: #d4d4d4;
-  border-color: #1a1a1a;
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
+  background-color: #e4e4e4;
+  border-color: #ee851a;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
 }
 
-.btn-check:checked + .btn-feature,
-.btn-check:active + .btn-feature, .btn-feature:active, .btn-feature.active,
-.show > .btn-feature.dropdown-toggle {
+.btn-check:checked + button.btn-default,
+.btn-check:active + button.btn-default, button.btn-default:active, button.btn-default.active,
+.show > button.btn-default.dropdown-toggle {
   color: #000;
-  background-color: #d6d6d6;
-  border-color: #1a1a1a;
+  background-color: #e5e5e5;
+  border-color: #ee851a;
 }
 
-.btn-check:checked + .btn-feature:focus,
-.btn-check:active + .btn-feature:focus, .btn-feature:active:focus, .btn-feature.active:focus,
-.show > .btn-feature.dropdown-toggle:focus {
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
+.btn-check:checked + button.btn-default:focus,
+.btn-check:active + button.btn-default:focus, button.btn-default:active:focus, button.btn-default.active:focus,
+.show > button.btn-default.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
 }
 
-.btn-feature:disabled, .btn-feature.disabled {
+button.btn-default:disabled, button.btn-default.disabled {
   color: #000;
-  background-color: #cccccc;
-  border-color: black;
+  background-color: #dfdfdf;
+  border-color: #ec7700;
 }
 
 .table {

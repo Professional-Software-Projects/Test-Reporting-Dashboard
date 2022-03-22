@@ -26,9 +26,9 @@ function ViewRoutes() {
             <Route path='components/:component/:version/:result/:buildNumber/*' element={<GetReport />} />
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
             <Route path='components' element={
-                <div id='report'>
+                <div id='report' style={{ margin: 10, padding: 10 }}>
                     <Link to='/'>
-                        <button type="button" class="btn btn-feature">View Rolled Up Test Results</button>
+                        <button type="button" className="btn btn-default">View Rolled Up Test Results</button>
                     </Link>
                     <ComponentView component='core-data' version='v2' />
                     <ComponentView component='metadata' version='v2' />

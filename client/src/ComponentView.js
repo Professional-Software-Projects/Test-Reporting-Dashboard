@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
+import { GetProductHealth } from './MigratorView.js';
 import 'chart.js/auto'
 import getChart from './PieChartTemplate.js';
 import './style/report.css';
@@ -30,7 +31,6 @@ function ComponentView(component) {
                     getReport(report);
                 }
             })
-            .then(console.log('Successfully received test data from API.'))
             .catch(err => {
                 console.log('Error! Could not communicate with the API.');
                 console.log(err);
@@ -47,28 +47,35 @@ function ComponentView(component) {
     const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
-        <div id='report'>
+        <div id='report' className='container'>
             <h1 id='component'>LiveData {componentTitle}</h1>
-            <p>Build Time: {(Math.round(buildTime * 1000) / 1000).toFixed(3)}</p>
-            <p id='pass'>Tests Passed: {passCount}</p>
-            <p id='fail'>Tests Failed: {failCount}</p>
-            <p id='skip'>Tests Skipped: {skipCount}</p>
-            <div>
+            <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
+
+            <div id='wrapper'>
+                <p>Total Tests Passed: <span id='pass'>{passCount}</span></p>
+                <p>Total Tests Failed: <span id='fail'>{failCount}</span></p>
+                <p>Total Tests Skipped: <span id='skip'>{skipCount}</span></p>
+                <p>Total Build Time: <span>{(Math.round(buildTime * 1000) / 1000).toFixed(3)} seconds</span></p>
+            </div>
+            <div id='wrapper'>
                 <Pie data={data} height={200} width={200} options={options} />
             </div>
-            <div id='report'>
+
+            <div>
                 <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
-                <Link to={'/components/' + componentName + '/v2/passed'}>
-                    <button type="button" class="btn btn-feature">{componentTitle} Health Report</button>
-                </Link>
-                <Link to={'/components/' + componentName + '/v2/passed/2'}>
-                    <button type="button" class="btn btn-feature">{componentTitle} Build Data</button>
-                </Link>
-                <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
-                    <button type='button' class="btn btn-feature">{componentTitle} Test Report</button>
-                </Link>
+                <div className='btn btn-group' style={{ display: 'block', margin: '0 auto' }}>
+                    <Link to={'/components/' + componentName + '/v2/passed'}>
+                        <button type="button" className="btn btn-default">{componentTitle} Health Report</button>
+                    </Link>
+                    <Link to={'/components/' + componentName + '/v2/passed/2'}>
+                        <button type="button" className="btn btn-default">{componentTitle} Build Data</button>
+                    </Link>
+                    <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
+                        <button type='button' className="btn btn-default">{componentTitle} Test Report</button>
+                    </Link>
+                </div>
             </div>
-        </div>
+        </div >
     );
 }
 
