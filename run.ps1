@@ -1,3 +1,3 @@
-docker build -t "server" ./server/
-docker build -t "client" ./client/
-docker-compose up -d --build
+docker build ./server/
+docker build ./client/
+docker-compose up -d --remove-orphans --force-recreate

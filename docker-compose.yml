@@ -2,35 +2,43 @@ version: '3.8'
 services:
 
   server:
+    container_name: backend
     image: server
     ports:
-      - '5000:5000'
+      - 5000:5000
     networks:
-      - mern-app
+      - stack-network
     depends_on:
       - mongo
+    restart: always
 
   client:
+    container_name: frontend
     image: client
     stdin_open: true
     ports:
-      - '3000:3000'
+      - 3000:3000
     networks:
-      - mern-app
+      - stack-network
+    restart: always
 
   mongo:
+    container_name: database
     image: mongo
     ports:
-      - '27017:27017'
+      - 27017:27017
     networks:
-      - mern-app
+      - stack-network
     volumes:
       - mongo-data:/db/data
+    restart: always
 
 networks:
-  mern-app:
+  stack-network:
+    name: stack-network
     driver: bridge
 
 volumes:
   mongo-data:
+    name: mongo-data
     driver: local
