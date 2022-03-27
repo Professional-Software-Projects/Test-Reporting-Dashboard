@@ -1,9 +1,9 @@
 version: '3.8'
 services:
-
   server:
-    container_name: backend
+    build: ./server/
     image: server
+    container_name: backend
     ports:
       - 5000:5000
     networks:
@@ -13,8 +13,9 @@ services:
     restart: always
 
   client:
-    container_name: frontend
+    build: ./client/
     image: client
+    container_name: frontend
     stdin_open: true
     ports:
       - 3000:3000
@@ -23,8 +24,8 @@ services:
     restart: always
 
   mongo:
-    container_name: database
     image: mongo
+    container_name: database
     ports:
       - 27017:27017
     networks:

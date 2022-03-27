@@ -25,8 +25,10 @@ function ViewRoutes() {
             <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
             <Route path='components/:component/:version/:result/:buildNumber/*' element={<GetReport />} />
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
+
             <Route path='components' element={
                 <div id='report' style={{ margin: 10, padding: 10 }}>
+                    <h1 style={{ fontWeight: 'bold' }}>Component Reports</h1>
                     <Link to='/'>
                         <button type="button" className="btn btn-default">View Rolled Up Test Results</button>
                     </Link>
@@ -34,6 +36,7 @@ function ViewRoutes() {
                     <ComponentView component='metadata' version='v2' />
                     <ComponentView component='ui' version='v2' />
                 </div>} />
+
             <Route exact path='/*' element={<MigratorView />} />
         </Routes>
     );

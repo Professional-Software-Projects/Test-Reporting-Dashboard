@@ -6,12 +6,13 @@ import 'chart.js/auto'
 import getChart from './PieChartTemplate.js';
 import './style/report.css';
 
+
 function ComponentView(component) {
     const [report, getReport] = useState(0);
     const componentName = component.component;
     const versionNumber = component.version;
     let componentTitle;
-
+    
     if (componentName === 'core-data') {
         componentTitle = 'Migrator Core Data';
     } else if (componentName === 'metadata') {
@@ -19,12 +20,14 @@ function ComponentView(component) {
     } else if (componentName === 'ui') {
         componentTitle = 'Migrator UI';
     }
+    
+    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport';
 
     useEffect(() => {
         let isMounted = true;
 
-        console.log('Sending fetch request to http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport');
-        fetch('http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport')
+        console.log('Sending fetch request to ' + reportUrl);
+        fetch(reportUrl)
             .then(res => res.json())
             .then(report => {
                 if (isMounted) {
@@ -37,7 +40,7 @@ function ComponentView(component) {
             });
 
         return () => isMounted = false;
-    }, [componentName, versionNumber]);
+    }, [componentName, reportUrl, versionNumber]);
 
     const failCount = report.failCount;
     const passCount = report.passCount;
@@ -75,7 +78,7 @@ function ComponentView(component) {
                     </Link>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

@@ -11,6 +11,8 @@ app.use(cors());
 
 const apiSuffix = '/api/json';
 
+// TODO: add PUT calls to add tests to the database
+
 function fetchReport(res, req, url) {
     make_API_call(url)
         .then(response => {
