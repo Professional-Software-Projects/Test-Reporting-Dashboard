@@ -97,14 +97,14 @@ function MigratorView() {
 
 function GetProductHealth({ passCount, failCount, skipCount }) {
     let totalTests = passCount + failCount + skipCount;
-    let passRate = totalTests / passCount;
+    let passRate = (passCount / totalTests) * 100;
 
-    if ((passRate * 100) >= 99) {
-        return <h2>Product health is <span id='pass'>good!</span></h2>
-    } else if ((passRate * 100) > 92 && (passRate * 100) < 99) {
-        return <h2>Product health is <span id='mediocre'>acceptable.</span></h2>
-    } else if ((passRate * 100) < 92) {
-        return <h2>Product health is <span id='fail'>poor.</span></h2>
+    if (passRate >= 99) {
+        return <h2>{passRate}% of tests passed. Product health is <span id='pass'>good!</span></h2>
+    } else if (passRate > 92 && passRate < 99) {
+        return <h2>{passRate}% of tests passed. Product health is <span id='mediocre'>acceptable.</span></h2>
+    } else if (passRate < 92) {
+        return <h2>{passRate}% of tests passed. Product health is <span id='fail'>poor.</span></h2>
     } else {
         return <h2>Cannot get product health!</h2>
     }
