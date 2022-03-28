@@ -20,5 +20,3 @@ export function connectToServer(callback) {
 export function getDb() {
     return _db;
 }
-
-export { MongoClient };
