@@ -14,12 +14,21 @@ const apiSuffix = '/api/json';
 // TODO: add PUT calls to add tests to the database
 
 function fetchReport(res, req, url) {
+    connectToServer.connect("mongodb://mongo:27017")
     make_API_call(url)
         .then(response => {
             res.json(response);
             console.log(`Communication with the API from ${req.originalUrl} was successful.`);
-        })
-        .catch(err => {
+            var collectionName = "GeneralReports";
+            var collection = dbConn.collection(collectionName);
+            collection.insertMany(response, (err, result) => {
+                if (err) console.log(err);
+                if (result) {
+                    console.log("Import JSON into database successfully.");
+                }
+            });
+
+                }).catch(err => {
             console.log(`Unable to communicate with the API from ${req.originalUrl}. Is the API down?`);
             console.log(err);
             res.send(err);
@@ -90,31 +99,6 @@ function buildFetchRequest(req, res, url, component, result, buildNumber, test) 
             res.json({ message: `${req.originalUrl} is invalid.` });
         }
     }
-}
-
-function sendReportToDatabase(res, req, url) {
-    import {MongoClient} from '../db_functions/conn';
-    MongoClient.connect()
-    make_API_call(url)
-        .then(response => {
-            res.json(response);
-            console.log(`Communication with the API from ${req.originalUrl} was successful.`);
-
-            var collectionName = "GeneralReports";
-            var collection = dbConn.collection(collectionName);
-            collection.insertMany(response, (err, result) => {
-                if (err) console.log(err);
-                if (result) {
-                    console.log("Import CSV into database successfully.");
-                }
-            });
-        })
-
-        .catch(err => {
-            console.log(`Unable to communicate with the API from ${req.originalUrl}. Is the API down?`);
-            console.log(err);
-            res.send(err);
-        });
 }
 
 // for testing connection and verifying that json data can be sent to the frontend
