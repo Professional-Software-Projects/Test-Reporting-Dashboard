@@ -20,6 +20,10 @@ function ShowIsConnected() {
 
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
 function ViewRoutes() {
+    const [showCore, setShowCore] = useState(true);
+    const [showMeta, setShowMeta] = useState(false);
+    const [showUI, setShowUI] = useState(false);
+
     return (
         <Routes>
             <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
@@ -27,20 +31,47 @@ function ViewRoutes() {
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
 
             <Route path='components' element={
-                <div id='report' style={{ margin: 10, padding: 10}}>
+                <div id='report' style={{ margin: 10, padding: 10 }}>
                     <h1 style={{ fontWeight: 'bold' }}>Component Reports</h1>
-                    <button type="button" className="btn btn-default">Core data</button>
-                    <button type="button" className="btn btn-default">Meta Data</button>
-                    <button type="button" className="btn btn-default">UI</button>
+
+                    <button type="button" className="btn btn-default" onClick={() => {
+                        setShowCore(true);
+                        setShowMeta(false);
+                        setShowUI(false);
+                    }}>Core data</button>
+                    <button type="button" className="btn btn-default" onClick={() => {
+                        setShowCore(false);
+                        setShowMeta(true);
+                        setShowUI(false);
+                    }}>Meta Data</button>
+                    <button type="button" className="btn btn-default" onClick={() => {
+                        setShowCore(false);
+                        setShowMeta(false);
+                        setShowUI(true);
+                    }}>UI</button>
+
                     <Link to='/'>
                         <button type="button" className="btn btn-default">View Rolled Up Test Results</button>
                     </Link>
-                    <ComponentView component='core-data' version='v2' className="column"/>
-                    <ComponentView component='metadata' version='v2' className="column"/>
-                    <ComponentView component='ui' version='v2' className="column"/>
-                </div>} />
 
+                    {
+                        showCore ? <div>
+                            <ComponentView component='core-data' version='v2' className="column" />
+                        </div> : null
+                    }
+                    {
+                        showMeta ? <div>
+                            <ComponentView component='metadata' version='v2' className="column" />
+                        </div> : null
+                    }
+                    {
+                        showUI ? <div>
+                            <ComponentView component='ui' version='v2' className="column" />
+                        </div> : null
+                    }
+                </div>} />
             <Route exact path='/*' element={<MigratorView />} />
+
         </Routes>
     );
 }
