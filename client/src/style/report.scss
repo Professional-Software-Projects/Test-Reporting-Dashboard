@@ -1,0 +1,19 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+#json {
+  float: left;
+  text-align: left;
+}
+
+#pass {
+  color: #36a2eb;
+}
+
+#mediocre,
+#skip {
+  color: #ffce56;
+}
+
+#fail {
+  color: #ff6384;
+}
