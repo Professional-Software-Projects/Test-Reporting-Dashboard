@@ -11978,14 +11978,32 @@ code {
 }
 
 #wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: block;
   width: 500px;
   margin: 0 auto;
   -ms-flex-line-pack: center;
       align-content: center;
   position: relative;
+  /* Clear floats after the columns */
+  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+}
+
+#wrapper .column {
+  float: left;
+  width: 33.33%;
+  padding: 15px;
+}
+
+#wrapper .row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  #wrapper .column {
+    width: 100%;
+  }
 }
 
 #wrapper div {
@@ -12024,13 +12042,15 @@ code {
 }
 
 .topnav a :hover {
-  background-color: #ddd;
+  background-color: #ec7700;
   color: black;
 }
 
 button.btn-default {
   border-width: thick;
-  width: auto;
+  width: 150px;
+  height: 100px;
+  border-radius: 5%;
   color: black;
   background-color: #dfdfdf;
   border-color: #ec7700;
@@ -12073,8 +12093,14 @@ button.btn-default:disabled, button.btn-default.disabled {
   border-color: #ec7700;
 }
 
+button.btn-default:hover {
+  background-color: #ec7700;
+  color: black;
+}
+
 .table {
   background-color: whitesmoke;
+  border: #333;
   color: black;
   margin: 20px;
   padding: 20px 16px;

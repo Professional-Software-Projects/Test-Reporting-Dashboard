@@ -50,7 +50,7 @@ function ComponentView(component) {
     const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
-        <div id='report' className='container'>
+        <span id='report' className='container'>
             <h1 id='component'>LiveData {componentTitle}</h1>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
@@ -78,7 +78,7 @@ function ComponentView(component) {
                     </Link>
                 </div>
             </div>
-        </div>
+        </span>
     );
 }
 

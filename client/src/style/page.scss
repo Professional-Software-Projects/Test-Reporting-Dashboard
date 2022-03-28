@@ -28,12 +28,43 @@ code {
     monospace;
 }
 
+
+#report{
+  float: left;
+    width: 33.33%;
+    padding: 15px;
+
+}
+
+
+
 #wrapper {
-  display: flex;
-  width: 500px;
+  //display: block;
+  width: auto;
   margin: 0 auto;
   align-content: center;
   position: relative;
+
+  .column {
+    float: left;
+    width: 33.33%;
+    padding: 15px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+  @media screen and (max-width:600px) {
+    .column {
+      width: 100%;
+    }
+  }
+
 
   div {
     width: 50%;
@@ -70,7 +101,7 @@ code {
     font-size: 17px;
 
     :hover {
-      background-color: #ddd;
+      background-color: #ec7700;
       color: black;
     }
   }
@@ -78,7 +109,9 @@ code {
 
 button.btn-default {
   border-width: thick;
-  width: auto;
+  width: 150px;
+  height: auto;
+  border-radius: 5%;
   @include button-variant(
     $button-colour,
     $border-colour,
@@ -88,8 +121,16 @@ button.btn-default {
   margin-left: 1%;
 }
 
+button.btn-default:hover {
+  background-color: #ec7700;
+  color: black;
+}
+
+
+
 .table {
   background-color: whitesmoke;
+  border: #333;
   color: black;
   margin: 20px;
   padding: 20px 16px;
