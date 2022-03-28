@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Test Reporting Dashboard",
+  "name": "WanDisco Test Reporting Dashboard",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,7 +13,7 @@
       "sizes": "192x192"
     },
     {
-      "src": "wandisoc_logo_2.svg",
+      "src": "wandisco_logo_2.svg",
       "type": "image/svg",
       "sizes": "512x512"
     }

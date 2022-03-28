@@ -118,6 +118,12 @@ button.btn-default {
   );
   margin-right: 1%;
   margin-left: 1%;
+  align-content: center;
+
+  span {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 button.btn-default:hover {
