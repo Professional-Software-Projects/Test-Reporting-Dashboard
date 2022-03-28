@@ -12036,6 +12036,8 @@ button.btn-default {
   border-color: #ec7700;
   margin-right: 1%;
   margin-left: 1%;
+  -ms-flex-line-pack: center;
+      align-content: center;
 }
 
 button.btn-default:hover {
@@ -12071,6 +12073,11 @@ button.btn-default:disabled, button.btn-default.disabled {
   color: #000;
   background-color: #dfdfdf;
   border-color: #ec7700;
+}
+
+button.btn-default span {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .table {

@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AddComponent from './AddComponent';
+import ViewRoutes from './ViewRoutes';
 import './style/page.css';
 import './style/report.css';
-import ViewRoutes from './ViewRoutes';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+ReactDOM.render(
+    <div>
+        <AddComponent />
+    </div>,
+    document.getElementById('add-component')
+);
 
 ReactDOM.render(
     <BrowserRouter>
@@ -14,6 +22,7 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById('root')
 );
+
 
 function NotFound() {
     return (
