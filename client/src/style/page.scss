@@ -109,8 +109,7 @@ code {
 
 button.btn-default {
   border-width: thick;
-  width: 150px;
-  height: auto;
+  width: auto;
   border-radius: 5%;
   @include button-variant(
     $button-colour,
