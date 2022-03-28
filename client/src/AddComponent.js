@@ -3,17 +3,36 @@ import React, { useState } from 'react';
 function AddComponent() {
 
     const [link, setLink] = useState('');
-    const [showForm, setShowForm] = useState(false);
+    const [name, setName] = useState('');
+    const [showAPIForm, setShowAPIForm] = useState(false);
+    const [showNameForm, setShowNameForm] = useState(false);
 
     return (
         <div>
             <button type="button" className="btn btn-default" onClick={() => {
-                setShowForm(!showForm);
+                setShowAPIForm(!showAPIForm);
+                setShowNameForm(!showNameForm);
             }}>
                 <span>Add Component</span>
             </button>
             {
-                showForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
+                showNameForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
+                    e.preventDefault();
+                    alert(`Added component from ${link}`);
+                }}>
+                    <label>
+                        Component Name:
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
+                        />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form> : null
+            }
+            {
+                showAPIForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
                     e.preventDefault();
                     alert(`Added component from ${link}`);
                 }}>
