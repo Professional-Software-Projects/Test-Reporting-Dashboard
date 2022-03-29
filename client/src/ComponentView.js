@@ -64,9 +64,9 @@ function ComponentView(component) {
                 <Pie data={data} height={200} width={200} options={options} />
             </div>
 
-            <div>
+            <div id= 'details'>
                 <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
-                <div className='btn btn-group' style={{ display: 'block', margin: '0 auto' }}>
+                <div className='btn btn-group' style={{ display: 'block'}}>
                     <Link to={'/components/' + componentName + '/v2/passed'}>
                         <button type="button" className="btn btn-default">{componentTitle} Health Report</button>
                     </Link>

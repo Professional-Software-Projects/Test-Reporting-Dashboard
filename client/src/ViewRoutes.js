@@ -31,29 +31,29 @@ function ViewRoutes() {
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
 
             <Route path='components' element={
-                <div id='report' style={{ margin: 10, padding: 10 }}>
+                <div id='report' style={{ margin: 10, padding: 10}}>
                     <h1 style={{ fontWeight: 'bold' }}>Component Reports</h1>
-
-                    <button type="button" className="btn btn-default" onClick={() => {
-                        setShowCore(true);
-                        setShowMeta(false);
-                        setShowUI(false);
-                    }}>Core data</button>
-                    <button type="button" className="btn btn-default" onClick={() => {
-                        setShowCore(false);
-                        setShowMeta(true);
-                        setShowUI(false);
-                    }}>Meta Data</button>
-                    <button type="button" className="btn btn-default" onClick={() => {
-                        setShowCore(false);
-                        setShowMeta(false);
-                        setShowUI(true);
-                    }}>UI</button>
-
-                    <Link to='/'>
-                        <button type="button" className="btn btn-default">View Rolled Up Test Results</button>
-                    </Link>
-
+                    <div id='menu'>
+                        <button type="button" className="btn btn-default" onClick={() => {
+                            setShowCore(true);
+                            setShowMeta(false);
+                            setShowUI(false);
+                        }}>Core data</button>
+                        <button type="button" className="btn btn-default" onClick={() => {
+                            setShowCore(false);
+                            setShowMeta(true);
+                            setShowUI(false);
+                        }}>Meta Data</button>
+                        <button type="button" className="btn btn-default" onClick={() => {
+                            setShowCore(false);
+                            setShowMeta(false);
+                            setShowUI(true);
+                        }}>UI</button>
+                    
+                        <Link to='/'>
+                            <button type="button" className="btn btn-default">View Rolled Up Test Results </button>
+                        </Link>
+                    </div>
                     {
                         showCore ? <div>
                             <ComponentView component='core-data' version='v2' className="column" />

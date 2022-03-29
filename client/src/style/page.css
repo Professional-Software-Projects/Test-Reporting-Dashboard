@@ -11968,45 +11968,22 @@ body {
   background: #333;
   color: #fff;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
- "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
- sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
- monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 #wrapper {
   display: block;
-  width: 500px;
+  width: auto;
   margin: 0 auto;
   -ms-flex-line-pack: center;
       align-content: center;
   position: relative;
-  /* Clear floats after the columns */
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-}
-
-#wrapper .column {
-  float: left;
-  width: 33.33%;
-  padding: 15px;
-}
-
-#wrapper .row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-@media screen and (max-width: 600px) {
-  #wrapper .column {
-    width: 100%;
-  }
 }
 
 #wrapper div {
@@ -12044,15 +12021,11 @@ code {
   font-size: 17px;
 }
 
-.topnav a :hover {
-  background-color: #ec7700;
-  color: black;
-}
-
 button.btn-default {
   border-width: thick;
   width: 150px;
-  height: 100px;
+  max-height: 200px;
+  min-height: 100px;
   border-radius: 5%;
   color: black;
   background-color: #dfdfdf;
@@ -12098,9 +12071,14 @@ button.btn-default:disabled, button.btn-default.disabled {
   border-color: #ec7700;
 }
 
+button.btn-default span {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 button.btn-default:hover {
   background-color: #ec7700;
-  color: black;
+  color: white;
 }
 
 .table {
@@ -12118,5 +12096,21 @@ td {
   border: 3px solid #f89a1f;
   border-collapse: collapse;
   vertical-align: top;
+}
+
+#report {
+  display: block;
+}
+
+#menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=page.css.map */
