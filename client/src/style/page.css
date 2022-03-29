@@ -12014,18 +12014,9 @@ code {
   overflow: hidden;
 }
 
-.topnav a {
+.topnav img {
   float: left;
-  color: grey;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a :hover {
-  background-color: #ddd;
-  color: black;
+  margin-right: 10px;
 }
 
 button.btn-default {

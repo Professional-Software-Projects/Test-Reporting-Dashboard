@@ -2,52 +2,62 @@ import React, { useState } from 'react';
 
 function AddComponent() {
 
-    const [link, setLink] = useState('');
-    const [name, setName] = useState('');
-    const [showAPIForm, setShowAPIForm] = useState(false);
-    const [showNameForm, setShowNameForm] = useState(false);
+    const apiPrefix = 'http://localhost:5000/';
+
+    const [component, setComponent] = useState({
+        componentName: '',
+        componentLink: ''
+    });
+    
+    const [showForm, setShowForm] = useState(false);
+
+    const handleChange = (e) => {
+        setComponent({...component, [e.target.name]: e.target.value});
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        component.componentLink = apiPrefix + component.componentLink;
+        console.log("Added component " + component.componentName + " from " + component.componentLink);
+        setComponent({
+            componentName: '',
+            componentLink: ''
+        });
+    }
 
     return (
-        <div>
+        <span>
             <button type="button" className="btn btn-default" onClick={() => {
-                setShowAPIForm(!showAPIForm);
-                setShowNameForm(!showNameForm);
+                setShowForm(!showForm);
             }}>
                 <span>Add Component</span>
             </button>
+
             {
-                showNameForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(`Added component from ${link}`);
-                }}>
-                    <label>
-                        Component Name:
-                        <input
+                showForm ? <form onSubmit={handleSubmit}>
+
+                    <label htmlFor='componentName'>
+                        Component Name: 
+                        <input 
                             type="text"
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                        />
+                            name="componentName"
+                            value={component.componentName}
+                            onChange={handleChange}/>
                     </label>
-                    <input type="submit" value="Submit" />
+                    <label htmlFor='componentLink'>
+                        Component API Link: 
+                        <input 
+                            type="text"
+                            name="componentLink"
+                            value={component.componentLink}
+                            onChange={handleChange}/>
+                    </label>
+
+                    <input type="submit" value="Add" />
                 </form> : null
             }
-            {
-                showAPIForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(`Added component from ${link}`);
-                }}>
-                    <label>
-                        Component API link:
-                        <input
-                            type="text"
-                            value={link}
-                            onChange={e => setLink(e.target.value)}
-                        />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form> : null
-            }
-        </div>
+
+        </span>
     );
 }
 
