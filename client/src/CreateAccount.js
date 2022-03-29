@@ -2,54 +2,58 @@ import React, { useState } from 'react';
 
 function CreateAccount() {
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [showUsernameForm, setShowUsernameForm] = useState(false);
-    const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [user, setUser] = useState({
+        userName: '',
+        userPassword: ''
+    });
+
+    const [showForm, setShowForm] = useState(false);
+
+    // function that runs when you type in the text box
+    const handleChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
+    }
+
+    // function that runs when you submit the form
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+
+        // clears the text box on submit, this should be last in the function
+        setUser({
+            userName: '',
+            userPassword: ''
+        });
+    }
 
     return (
         <span>
             <button type="button" className="btn btn-default" onClick={() => {
-                setShowUsernameForm(!showUsernameForm);
-                setShowPasswordForm(!showPasswordForm);
+                setShowForm(!showForm);
             }}>
                 <span>Create Account</span>
             </button>
 
             {
-                // Add component name logic
-                showUsernameForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(`Added component from ${username}`);
-                }}>
-                    <label>
-                        Username: 
+                showForm ? <form style={{ zIndex: "1" }} onSubmit={handleSubmit}>
+                    <label htmlFor='userName'>
+                        Username:
                         <input
                             type="text"
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
-                        />
+                            name="userName"
+                            value={user.userName}
+                            onChange={handleChange} />
                     </label>
-                    <input type="submit" value="Submit" />
-                </form> : null
-            }
-
-
-            {
-                // Add component API link logic
-                showPasswordForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(`Added component from ${password}`);
-                }}>
-                    <label>
-                        Password: 
+                    <label htmlFor='userPassword'>
+                        Password:
                         <input
-                            type="text"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
+                            type="password"
+                            name="userPassword"
+                            value={user.userPassword}
+                            onChange={handleChange} />
                     </label>
-                    <input type="submit" value="Submit" />
+
+                    <input type="submit" value="Add" />
                 </form> : null
             }
         </span>

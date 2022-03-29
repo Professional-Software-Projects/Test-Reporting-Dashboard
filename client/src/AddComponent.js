@@ -8,11 +8,11 @@ function AddComponent() {
         componentName: '',
         componentLink: ''
     });
-    
+
     const [showForm, setShowForm] = useState(false);
 
     const handleChange = (e) => {
-        setComponent({...component, [e.target.name]: e.target.value});
+        setComponent({ ...component, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = (e) => {
@@ -37,20 +37,20 @@ function AddComponent() {
                 showForm ? <form onSubmit={handleSubmit}>
 
                     <label htmlFor='componentName'>
-                        Component Name: 
-                        <input 
+                        Component Name:
+                        <input
                             type="text"
                             name="componentName"
                             value={component.componentName}
-                            onChange={handleChange}/>
+                            onChange={handleChange} />
                     </label>
                     <label htmlFor='componentLink'>
-                        Component API Link: 
-                        <input 
+                        Component API Link:
+                        <input
                             type="text"
                             name="componentLink"
                             value={component.componentLink}
-                            onChange={handleChange}/>
+                            onChange={handleChange} />
                     </label>
 
                     <input type="submit" value="Add" />
