@@ -6,11 +6,15 @@ function AddComponent() {
     const [showForm, setShowForm] = useState(false);
 
     return (
-        <button type="button" className="btn btn-default" onClick={() => setShowForm(!showForm)}>
-            <span>Add Component</span>
+        <div>
+            <button type="button" className="btn btn-default" onClick={() => {
+                setShowForm(!showForm);
+            }}>
+                <span>Add Component</span>
+            </button>
             {
-                showForm ? <form style={{ zIndex: "1" }} onSubmit={(formEvent) => {
-                    formEvent.preventDefault();
+                showForm ? <form style={{ zIndex: "1" }} onSubmit={(e) => {
+                    e.preventDefault();
                     alert(`Added component from ${link}`);
                 }}>
                     <label>
@@ -24,7 +28,7 @@ function AddComponent() {
                     <input type="submit" value="Submit" />
                 </form> : null
             }
-        </button>
+        </div>
     );
 }
 

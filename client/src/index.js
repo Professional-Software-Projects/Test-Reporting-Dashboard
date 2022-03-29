@@ -7,7 +7,7 @@ import './style/page.css';
 import './style/report.css';
 
 ReactDOM.render(
-    <div>
+    <div style={{ display: "inline-block" }}>
         <AddComponent />
     </div>,
     document.getElementById('add-component')
