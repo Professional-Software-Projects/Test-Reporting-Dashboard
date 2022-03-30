@@ -12,16 +12,17 @@ import './style/report.css';
          then a display can be created from this, which will then be returned back to the page for the user
 */
 
-function MigratorView() {
+function MigratorView({ version, result }) {
     const [coreDataReport, getCoreDataReport] = useState(0);
     const [metadataReport, getMetadataReport] = useState(0);
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
+    const apiSuffix = version + '/' + result + '/2/testReport';
 
     useEffect(() => {
         let isMounted = true;
 
-        console.log('Sending fetch request to http://localhost:5000/core-data/v2/passed/3/testReport');
-        fetch('http://localhost:5000/core-data/v2/passed/3/testReport')
+        console.log('Sending fetch request to http://localhost:5000/core-data/' + apiSuffix);
+        fetch('http://localhost:5000/core-data/' + apiSuffix)
             .then(res => res.json())
             .then(coreDataReport => {
                 if (isMounted) {
@@ -33,8 +34,8 @@ function MigratorView() {
                 console.log(err);
             });
 
-        console.log('Sending fetch request to http://localhost:5000/metadata/v2/passed/3/testReport');
-        fetch('http://localhost:5000/metadata/v2/passed/3/testReport')
+        console.log('Sending fetch request to http://localhost:5000/metadata/' + apiSuffix);
+        fetch('http://localhost:5000/metadata/' + apiSuffix)
             .then(res => res.json())
             .then(metadataReport => {
                 if (isMounted) {
@@ -46,8 +47,8 @@ function MigratorView() {
                 console.log(err);
             });
 
-        console.log('Sending fetch request to http://localhost:5000/ui/v2/passed/3/testReport');
-        fetch('http://localhost:5000/ui/v2/passed/3/testReport')
+        console.log('Sending fetch request to http://localhost:5000/ui/' + apiSuffix);
+        fetch('http://localhost:5000/ui/' + apiSuffix)
             .then(res => res.json())
             .then(userInterfaceReport => {
                 if (isMounted) {
@@ -58,8 +59,9 @@ function MigratorView() {
                 console.log('Error! Could not communicate with the API.');
                 console.log(err);
             });
+
         return () => isMounted = false;
-    }, []);
+    }, [apiSuffix]);
 
     const passCount = coreDataReport.passCount + metadataReport.passCount + userInterfaceReport.passCount;
     const failCount = coreDataReport.failCount + metadataReport.failCount + userInterfaceReport.failCount;

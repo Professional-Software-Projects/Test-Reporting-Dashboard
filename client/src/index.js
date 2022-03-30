@@ -1,21 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ViewRoutes from './ViewRoutes';
-import AddComponent from './AddComponent';
+import DashboardRoutes from './DashboardRoutes';
+import AddProduct from './AddProduct';
 import CreateAccount from './CreateAccount';
 import './style/page.css';
 import './style/report.css';
 
 ReactDOM.render(
     <span style={{ display: "inline-block" }}>
-        <AddComponent />
+        <AddProduct />
     </span>,
     document.getElementById('add-component')
 );
 
 ReactDOM.render(
-    <span style={{ display:"inline-block" }}>
+    <span style={{ display: "inline-block" }}>
         <CreateAccount />
     </span>,
     document.getElementById('login')
@@ -24,7 +24,7 @@ ReactDOM.render(
 ReactDOM.render(
     <BrowserRouter>
         <Routes>
-            <Route path='/*' element={<ViewRoutes />} />
+            <Route path='/*' element={<DashboardRoutes />} />
             <Route path='*' element={<NotFound />} />
         </Routes>
     </BrowserRouter>,

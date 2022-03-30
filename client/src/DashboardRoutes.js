@@ -19,7 +19,7 @@ function ShowIsConnected() {
 }
 
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
-function ViewRoutes() {
+function DashboardRoutes() {
     return (
         <Routes>
             <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
@@ -37,9 +37,12 @@ function ViewRoutes() {
                     <ComponentView component='ui' version='v2' />
                 </div>} />
 
-            <Route exact path='/*' element={<MigratorView />} />
+            <Route exact path='/*' element={
+                // use map() to render multiple MigratorViews
+                <MigratorView />
+            } />
         </Routes>
     );
 }
 
-export { ViewRoutes as default };
+export { DashboardRoutes as default };

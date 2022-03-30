@@ -21,7 +21,7 @@ function ComponentView(component) {
         componentTitle = 'Migrator UI';
     }
 
-    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/3/testReport';
+    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport';
 
     useEffect(() => {
         let isMounted = true;

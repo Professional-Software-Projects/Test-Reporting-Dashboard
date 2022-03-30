@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import MigratorView from './MigratorView';
+import './style/page.css'
 
-function AddComponent() {
+function AddProduct() {
 
     const apiPrefix = 'http://localhost:5000/';
-
     const [component, setComponent] = useState({
         componentName: '',
         componentLink: ''
     });
-
     const [showForm, setShowForm] = useState(false);
+    const [componentTabs, setComponentTab] = useState(['Migrator V2']);
+    const [showTabs, setShowTabs] = useState([false]);
 
     const handleChange = (e) => {
         setComponent({ ...component, [e.target.name]: e.target.value });
@@ -17,16 +19,39 @@ function AddComponent() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // this is to prevent repeatedly concatenating the link prefix on each submission
+        let temp = component.componentLink;
         component.componentLink = apiPrefix + component.componentLink;
         console.log("Added component " + component.componentName + " from " + component.componentLink);
+        component.componentLink = temp;
+
+        setComponentTab([...componentTabs], component.componentName);
+        setShowTabs(true);
+
         setComponent({
             componentName: '',
             componentLink: ''
         });
     }
 
+    function Tab() {
+        return (
+            showTabs ? <ul className="nav nav-tabs" id="myTab" role="tablist">
+                {componentTabs.map(item => (
+                    <li className="nav-item" role="presentation" key={item}>
+                        <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                            {component.componentName}
+                            {console.log(item + " " + component.componentName)}
+                        </button>
+                    </li>
+                ))}
+            </ul> : null
+        );
+    }
+
     return (
-        <span>
+        <span style={{ float: 'right' }}>
             <button type="button" className="btn btn-default" onClick={() => {
                 setShowForm(!showForm);
             }}>
@@ -52,13 +77,12 @@ function AddComponent() {
                             value={component.componentLink}
                             onChange={handleChange} />
                     </label>
-
                     <input type="submit" value="Add" />
                 </form> : null
             }
-
         </span>
     );
 }
 
-export { AddComponent as default };
+
+export { AddProduct as default };
