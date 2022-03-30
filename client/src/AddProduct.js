@@ -1,82 +1,81 @@
 import React, { useState } from 'react';
-import MigratorView from './MigratorView';
+import ProductView from './ProductView';
 import './style/page.css'
 
-function AddProduct() {
+function AddProduct({ productViews, setProductViews }) {
 
-    const apiPrefix = 'http://localhost:5000/';
-    const [component, setComponent] = useState({
-        componentName: '',
-        componentLink: ''
+    const [product, setProduct] = useState({
+        productName: '',
+        productVersion: '',
+        productResult: ''
     });
     const [showForm, setShowForm] = useState(false);
-    const [componentTabs, setComponentTab] = useState(['Migrator V2']);
-    const [showTabs, setShowTabs] = useState([false]);
 
     const handleChange = (e) => {
-        setComponent({ ...component, [e.target.name]: e.target.value });
+        setProduct({ ...product, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // this is to prevent repeatedly concatenating the link prefix on each submission
-        let temp = component.componentLink;
-        component.componentLink = apiPrefix + component.componentLink;
-        console.log("Added component " + component.componentName + " from " + component.componentLink);
-        component.componentLink = temp;
+        console.log("Added Product " + product.productName + ", version " + product.productVersion + ", with a " + product.productResult + " result.");
 
-        setComponentTab([...componentTabs], component.componentName);
-        setShowTabs(true);
+        setProductViews([...productViews, <ProductView version={product.productVersion} result={product.productResult} />]);
 
-        setComponent({
-            componentName: '',
-            componentLink: ''
+        setProduct({
+            productName: '',
+            productVersion: '',
+            productResult: ''
         });
     }
 
-    function Tab() {
-        return (
-            showTabs ? <ul className="nav nav-tabs" id="myTab" role="tablist">
-                {componentTabs.map(item => (
-                    <li className="nav-item" role="presentation" key={item}>
-                        <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                            {component.componentName}
-                            {console.log(item + " " + component.componentName)}
-                        </button>
-                    </li>
-                ))}
-            </ul> : null
-        );
-    }
-
     return (
-        <span style={{ float: 'right' }}>
+        <span style={{ float: 'left' }}>
             <button type="button" className="btn btn-default" onClick={() => {
                 setShowForm(!showForm);
             }}>
-                <span>Add Component</span>
+                <span>Add Product</span>
             </button>
 
             {
-                showForm ? <form onSubmit={handleSubmit}>
+                showForm ? <form onSubmit={() => handleSubmit}>
 
-                    <label htmlFor='componentName'>
-                        Component Name:
+                    <label htmlFor='productName'>
+                        Product Name:
                         <input
                             type="text"
-                            name="componentName"
-                            value={component.componentName}
+                            name="productName"
+                            value={product.productName}
                             onChange={handleChange} />
-                    </label>
-                    <label htmlFor='componentLink'>
-                        Component API Link:
+                    </label><br />
+                    <label htmlFor='productVersion'>
+                        Product Version:
                         <input
                             type="text"
-                            name="componentLink"
-                            value={component.componentLink}
+                            name="productVersion"
+                            value={product.productVersion}
                             onChange={handleChange} />
-                    </label>
+                    </label><br />
+
+                    <input
+                        type="radio"
+                        name="productResult"
+                        value="passed"
+                        onChange={handleChange} />
+                    <label htmlFor='productResult'> Passed</label><br />
+                    <input
+                        type="radio"
+                        name="productResult"
+                        value="failed"
+                        onChange={handleChange} />
+                    <label htmlFor='productResult'> Failed</label><br />
+                    <input
+                        type="radio"
+                        name="productResult"
+                        value="skipped"
+                        onChange={handleChange} />
+                    <label htmlFor='productResult'> Skipped</label><br />
+
                     <input type="submit" value="Add" />
                 </form> : null
             }

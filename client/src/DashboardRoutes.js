@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import MigratorView from './MigratorView';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
+import AddProduct from './AddProduct';
 import './style/report.css';
-
-// this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
-// until this string is received, it will display the string "Loading..."
-// this function is mostly used to test and verify communication between the backend and the frontend.
-function ShowIsConnected() {
-    const [isConnected, setConnected] = useState(null);
-
-    fetch('http://localhost:5000')
-        .then(res => res.json())
-        .then(setConnected);
-
-    console.log(isConnected ? isConnected : "Loading...");
-}
+import ProductView from './ProductView';
 
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
 function DashboardRoutes() {
+
+    // handle the state of ComponentView, ProductView and AddProduct
+    const [productViews, setProductViews] = useState([]);
+
+    console.log(productViews);
+
     return (
         <Routes>
             <Route path='components/:component/:version/:result/:buildNumber/:test' element={<GetReport />} />
@@ -38,8 +32,12 @@ function DashboardRoutes() {
                 </div>} />
 
             <Route exact path='/*' element={
-                // use map() to render multiple MigratorViews
-                <MigratorView />
+                // use map() to render multiple ProductViews
+                <div id='report' style={{ margin: 10, padding: 10 }}>
+                    <h1>LiveData Migrator Test Reporting Dashboard</h1>
+                    <AddProduct productViews={productViews} setProductViews={setProductViews} />
+                    {productViews}
+                </div>
             } />
         </Routes>
     );

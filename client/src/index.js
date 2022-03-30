@@ -2,17 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DashboardRoutes from './DashboardRoutes';
-import AddProduct from './AddProduct';
 import CreateAccount from './CreateAccount';
 import './style/page.css';
 import './style/report.css';
-
-ReactDOM.render(
-    <span style={{ display: "inline-block" }}>
-        <AddProduct />
-    </span>,
-    document.getElementById('add-component')
-);
 
 ReactDOM.render(
     <span style={{ display: "inline-block" }}>
