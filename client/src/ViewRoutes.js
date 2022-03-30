@@ -31,7 +31,7 @@ function ViewRoutes() {
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
 
             <Route path='components' element={
-                <div id='report' style={{ margin: 10, padding: 10}}>
+                <div id='report' style={{ margin: 25, padding: 10, backgroundColor: 'whitesmoke'}}>
                     <h1 style={{ fontWeight: 'bold' }}>Component Reports</h1>
                     <div id='menu'>
                         <button type="button" className="btn btn-default" onClick={() => {

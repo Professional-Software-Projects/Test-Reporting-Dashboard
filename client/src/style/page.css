@@ -11957,6 +11957,10 @@ fieldset:disabled .btn {
   }
 }
 
+#site {
+  background-color: #333;
+}
+
 h1, .h1, h2, .h2 {
   font-weight: bold;
   text-decoration: underline;
@@ -11965,7 +11969,7 @@ h1, .h1, h2, .h2 {
 }
 
 body {
-  background: #333;
+  background-color: blue;
   color: #fff;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -12008,7 +12012,7 @@ code {
 }
 
 .topnav {
-  background-color: whitesmoke;
+  background-color: rgba(245, 245, 245, 0.466);
   overflow: hidden;
 }
 
@@ -12027,6 +12031,7 @@ button.btn-default {
   max-height: 200px;
   min-height: 100px;
   border-radius: 5%;
+  padding: 10px;
   color: black;
   background-color: #dfdfdf;
   border-color: #ec7700;
@@ -12112,5 +12117,9 @@ td {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+footer {
+  background-color: #f89a1f;
 }
 /*# sourceMappingURL=page.css.map */
