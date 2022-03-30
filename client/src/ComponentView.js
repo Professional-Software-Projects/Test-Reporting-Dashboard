@@ -12,7 +12,7 @@ function ComponentView(component) {
     const componentName = component.component;
     const versionNumber = component.version;
     let componentTitle;
-    
+
     if (componentName === 'core-data') {
         componentTitle = 'Migrator Core Data';
     } else if (componentName === 'metadata') {
@@ -20,8 +20,8 @@ function ComponentView(component) {
     } else if (componentName === 'ui') {
         componentTitle = 'Migrator UI';
     }
-    
-    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport';
+
+    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/3/testReport';
 
     useEffect(() => {
         let isMounted = true;
@@ -64,7 +64,7 @@ function ComponentView(component) {
                 <Pie data={data} height={200} width={200} options={options} />
             </div>
 
-            <div>
+            <div id='menu'>
                 <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
                 <div className='btn btn-group' style={{ display: 'block', margin: '0 auto' }}>
                     <Link to={'/components/' + componentName + '/v2/passed'}>

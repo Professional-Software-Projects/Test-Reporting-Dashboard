@@ -1,2 +1,6 @@
+@echo off
+echo Stopping container...
 docker-compose stop
+echo Restarting WSL...
 wsl --shutdown
+echo Finished! Docker will need to be restarted next time you want to build the container.

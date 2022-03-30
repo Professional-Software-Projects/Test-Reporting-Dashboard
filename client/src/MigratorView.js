@@ -20,8 +20,8 @@ function MigratorView() {
     useEffect(() => {
         let isMounted = true;
 
-        console.log('Sending fetch request to http://localhost:5000/core-data/v2/passed/2/testReport');
-        fetch('http://localhost:5000/core-data/v2/passed/2/testReport')
+        console.log('Sending fetch request to http://localhost:5000/core-data/v2/passed/3/testReport');
+        fetch('http://localhost:5000/core-data/v2/passed/3/testReport')
             .then(res => res.json())
             .then(coreDataReport => {
                 if (isMounted) {
@@ -33,8 +33,8 @@ function MigratorView() {
                 console.log(err);
             });
 
-        console.log('Sending fetch request to http://localhost:5000/metadata/v2/passed/2/testReport');
-        fetch('http://localhost:5000/metadata/v2/passed/2/testReport')
+        console.log('Sending fetch request to http://localhost:5000/metadata/v2/passed/3/testReport');
+        fetch('http://localhost:5000/metadata/v2/passed/3/testReport')
             .then(res => res.json())
             .then(metadataReport => {
                 if (isMounted) {
@@ -46,8 +46,8 @@ function MigratorView() {
                 console.log(err);
             });
 
-        console.log('Sending fetch request to http://localhost:5000/ui/v2/passed/2/testReport');
-        fetch('http://localhost:5000/ui/v2/passed/2/testReport')
+        console.log('Sending fetch request to http://localhost:5000/ui/v2/passed/3/testReport');
+        fetch('http://localhost:5000/ui/v2/passed/3/testReport')
             .then(res => res.json())
             .then(userInterfaceReport => {
                 if (isMounted) {
