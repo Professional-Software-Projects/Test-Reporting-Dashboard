@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import ProductView from './ProductView';
 import './style/page.css'
 
 function AddProduct({ product, setProduct, productViews, setProductViews }) {
     const [showForm, setShowForm] = useState(false);
-    const productRef = useRef(product);
-    const productViewRef = useRef(productViews);
+
 
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.name]: e.target.value });
@@ -17,9 +16,6 @@ function AddProduct({ product, setProduct, productViews, setProductViews }) {
 
         // concatenate element
         setProductViews([...productViews, <ProductView name={product.productName} version={product.productVersion} result={product.productResult} number={product.productNumber} />]);
-        setShowForm(false);
-        productRef.current = product;
-        productViewRef.current = productViews;
     }
 
     return (

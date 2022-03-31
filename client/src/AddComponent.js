@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import ComponentView from './ComponentView';
 import './style/page.css'
 
 function AddComponent({ component, setComponent, componentViews, setComponentViews }) {
     const [showForm, setShowForm] = useState(false);
-    const componentRef = useRef(component);
-    const componentViewRef = useRef(componentViews);
+
 
     const handleChange = (e) => {
         setComponent({ ...component, [e.target.name]: e.target.value });
@@ -17,9 +16,6 @@ function AddComponent({ component, setComponent, componentViews, setComponentVie
 
         // concatenate element
         setComponentViews([...componentViews, <ComponentView name={component.componentName} version={component.componentVersion} result={component.componentResult} number={component.componentNumber} />]);
-        setShowForm(false);
-        componentRef.current = component;
-        componentViewRef.current = componentViews;
     }
 
     return (

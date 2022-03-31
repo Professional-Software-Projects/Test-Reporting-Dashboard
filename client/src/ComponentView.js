@@ -70,13 +70,6 @@ function ComponentView({ name, version, result, number }) {
                     </Link>
                 </div>
             </div>
-
-            <div id='body'>
-                <button type="button" className="btn btn-default">Edit Product</button>
-            </div>
-            <div id='body'>
-                <button type="button" className="btn btn-default">Delete Product</button>
-            </div>
         </div>
     );
 }
