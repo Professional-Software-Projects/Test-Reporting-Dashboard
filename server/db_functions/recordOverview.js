@@ -11,7 +11,7 @@ recordRoutes.route('/test_reports').get(function (req, res) {
     let dbConnect = getDb('test_reports');
     // gets all records and puts them into an array
     dbConnect
-        .collection('GeneralReports')
+        .collection('Overview')
         .find({})
         .toArray(function (err, result) {
             if (err) throw err;
