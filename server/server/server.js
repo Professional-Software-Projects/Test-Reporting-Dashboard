@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './config.env' });
-import express, { json } from 'express';
+import express, {json, response} from 'express';
 const app = express();
 import { make_API_call } from './api_caller';
 import cors from 'cors';
@@ -13,9 +13,22 @@ app.use(cors());
 const apiSuffix = '/api/json';
 
 // TODO: add PUT calls to add tests to the database
+function addLoginData(res, req){
+    connectToServer(function (err, db) {
+        if (err) console.log(err);
+        var dbo = db.db("users")
+        dbo.collection("NormalUsers").insertOne(response, (result) => {
+            if (err) console.log(err);
+            if (result) {
+                console.log("Import JSON into database successfully.");
+                db.close();
 
+            }
+        })
+    })
+    //})
+}
 function fetchReport(res, req, url) {
-
     make_API_call(url)
         .then(response => {
             res.json(response);
@@ -40,6 +53,20 @@ function fetchReport(res, req, url) {
         });
 }
 
+function authenticationUserAndPass(req, res) {
+
+    connectToServer(function (err, db) {
+        if (err) console.log(err);
+        var dbo = db.db("users")
+        dbo.collection("NormalUsers").findOne(response, (result) => {
+            if (err) console.log(err);
+            if (result) {
+                console.log('');
+                db.close();
+            }
+        });
+    });
+}
 // check the various parameters and use them to build the fetch request
 function buildFetchRequest(req, res, url, component, result, buildNumber, test) {
     if (component === 'ui') {
@@ -106,10 +133,35 @@ function buildFetchRequest(req, res, url, component, result, buildNumber, test) 
     }
 }
 
+function encrypt(password, btoaEncryptPass){
+        btoaEncryptPass =  window.btoa(password);
+}
+function decrypt(btoaEncryptPass, atobDecryptPass){
+    atobDecryptPass =  window.atob(btoaEncryptPass);
+}
+
+
+
+
 // for testing connection and verifying that json data can be sent to the frontend
 app.get('/', (req, res) => {
     res.json(`Successful connection on port: ${port}.`);
 });
+
+
+
+
+
+//for aquiring the data from the form, to be encrypted for the database
+app.get('http://localhost:3000', (req, res) => {
+    const username = req.params['username'];
+    const password = req.params['password'];
+    encrypt(password);
+    res = response;
+    //decrypt(btoaEncryptPass); if needed
+    addLoginData();
+});
+
 
 // enter in the url, and the parameters will be extracted and used to build the api fetch request
 app.get('/:component/:version/:result/:buildNumber([1-9]+)?/:test?', (req, res) => {
