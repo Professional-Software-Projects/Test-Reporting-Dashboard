@@ -52,7 +52,6 @@ function DashboardRoutes() {
                 </div>} />
 
             <Route exact path='/*' element={
-                // use map() to render multiple ProductViews
                 <div id='report' style={{ margin: 10, padding: 10 }}>
                     <h1 style={{ fontWeight: 'bold' }}>LiveData Migrator Test Reporting Dashboard</h1>
 
