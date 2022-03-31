@@ -29,6 +29,9 @@ function addLoginData(res, req){
     //})
 }
 function fetchReport(res, req, url) {
+    var password = "Test123";
+    encrypt(password);
+    console.log(encrypt);
     make_API_call(url)
         .then(response => {
             res.json(response);
