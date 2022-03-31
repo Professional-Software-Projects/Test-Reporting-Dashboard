@@ -4,6 +4,9 @@ import './style/page.css'
 
 function AddProduct({ productViews, setProductViews }) {
 
+    console.log("add views: " + Object.prototype.toString.call(productViews));
+    console.log("set views: " + Object.prototype.toString.call(setProductViews));
+
     const [product, setProduct] = useState({
         productName: '',
         productVersion: '',
@@ -20,7 +23,8 @@ function AddProduct({ productViews, setProductViews }) {
 
         console.log("Added Product " + product.productName + ", version " + product.productVersion + ", with a " + product.productResult + " result.");
 
-        setProductViews([...productViews, <ProductView version={product.productVersion} result={product.productResult} />]);
+        // concatenate element
+        setProductViews([...productViews, <ProductView name={product.productName} version={product.productVersion} result={product.productResult} />]);
 
         setProduct({
             productName: '',

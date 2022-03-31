@@ -12,11 +12,13 @@ import './style/report.css';
          then a display can be created from this, which will then be returned back to the page for the user
 */
 
-function ProductView({ version, result }) {
+function ProductView({ name, version, result }) {
     const [coreDataReport, getCoreDataReport] = useState(0);
     const [metadataReport, getMetadataReport] = useState(0);
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
     const apiSuffix = version + '/' + result + '/2/testReport';
+
+    console.log(name + " " + version + " " + result);
 
     useEffect(() => {
         let isMounted = true;
@@ -71,6 +73,7 @@ function ProductView({ version, result }) {
 
     return (
         <div id='body' className='container'>
+            <h2>{name}</h2>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
             <div id='body'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
@@ -10,9 +10,9 @@ import ProductView from './ProductView';
 function DashboardRoutes() {
 
     // handle the state of ComponentView, ProductView and AddProduct
-    const [productViews, setProductViews] = useState([]);
+    const [productViews, setProductViews] = useState([<ProductView name="Migrator" version="v1" result="passed" />]);
 
-    console.log(productViews);
+    console.log("views: " + Object.prototype.toString.call(productViews));
 
     return (
         <Routes>
@@ -36,7 +36,13 @@ function DashboardRoutes() {
                 <div id='report' style={{ margin: 10, padding: 10 }}>
                     <h1>LiveData Migrator Test Reporting Dashboard</h1>
                     <AddProduct productViews={productViews} setProductViews={setProductViews} />
-                    {productViews}
+
+                    {productViews.map(({ productName, productVersion, productResult }, i) => (
+                        <Fragment key={i}>
+                            <ProductView name={productName} version={productVersion} result={productResult} />
+                        </Fragment>
+                    ))}
+
                 </div>
             } />
         </Routes>
