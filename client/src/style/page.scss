@@ -10,6 +10,8 @@ $border-colour: #ec7700;
 
 h1,
 h2 {
+  overflow: hidden;
+  position: relative;
   font-weight: bold;
   text-decoration: underline;
   text-align: center;
@@ -68,7 +70,7 @@ code {
   overflow: hidden;
   
 
-  a {
+  img {
     float: left;
     color: grey;
     text-align: center;

@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AddComponent from './AddComponent';
-import ViewRoutes from './ViewRoutes';
+import DashboardRoutes from './DashboardRoutes';
+import CreateAccount from './CreateAccount';
 import './style/page.css';
 import './style/report.css';
 
 ReactDOM.render(
-    <div style={{ display: "inline-block" }}>
-        <AddComponent />
-    </div>,
-    document.getElementById('add-component')
+    <span style={{ display: "inline-block" }}>
+        <CreateAccount />
+    </span>,
+    document.getElementById('login')
 );
 
 ReactDOM.render(
     <BrowserRouter>
         <Routes>
-            <Route path='/*' element={<ViewRoutes />} />
+            <Route path='/*' element={<DashboardRoutes />} />
             <Route path='*' element={<NotFound />} />
         </Routes>
     </BrowserRouter>,

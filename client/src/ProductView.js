@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
-import 'chart.js/auto';
 import getChart from './PieChartTemplate.js';
+import 'chart.js/auto';
 import './style/page.css';
 import './style/report.css';
 
@@ -12,16 +12,19 @@ import './style/report.css';
          then a display can be created from this, which will then be returned back to the page for the user
 */
 
-function MigratorView() {
+function ProductView({ name, version, result }) {
     const [coreDataReport, getCoreDataReport] = useState(0);
     const [metadataReport, getMetadataReport] = useState(0);
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
+    const apiSuffix = version + '/' + result + '/2/testReport';
+
+    console.log(name + " " + version + " " + result);
 
     useEffect(() => {
         let isMounted = true;
 
-        console.log('Sending fetch request to http://localhost:5000/core-data/v2/passed/2/testReport');
-        fetch('http://localhost:5000/core-data/v2/passed/2/testReport')
+        console.log('Sending fetch request to http://localhost:5000/core-data/' + apiSuffix);
+        fetch('http://localhost:5000/core-data/' + apiSuffix)
             .then(res => res.json())
             .then(coreDataReport => {
                 if (isMounted) {
@@ -33,8 +36,8 @@ function MigratorView() {
                 console.log(err);
             });
 
-        console.log('Sending fetch request to http://localhost:5000/metadata/v2/passed/2/testReport');
-        fetch('http://localhost:5000/metadata/v2/passed/2/testReport')
+        console.log('Sending fetch request to http://localhost:5000/metadata/' + apiSuffix);
+        fetch('http://localhost:5000/metadata/' + apiSuffix)
             .then(res => res.json())
             .then(metadataReport => {
                 if (isMounted) {
@@ -46,8 +49,8 @@ function MigratorView() {
                 console.log(err);
             });
 
-        console.log('Sending fetch request to http://localhost:5000/ui/v2/passed/2/testReport');
-        fetch('http://localhost:5000/ui/v2/passed/2/testReport')
+        console.log('Sending fetch request to http://localhost:5000/ui/' + apiSuffix);
+        fetch('http://localhost:5000/ui/' + apiSuffix)
             .then(res => res.json())
             .then(userInterfaceReport => {
                 if (isMounted) {
@@ -58,20 +61,19 @@ function MigratorView() {
                 console.log('Error! Could not communicate with the API.');
                 console.log(err);
             });
+
         return () => isMounted = false;
-    }, []);
+    }, [apiSuffix]);
 
     const passCount = coreDataReport.passCount + metadataReport.passCount + userInterfaceReport.passCount;
     const failCount = coreDataReport.failCount + metadataReport.failCount + userInterfaceReport.failCount;
     const skipCount = coreDataReport.skipCount + metadataReport.skipCount + userInterfaceReport.skipCount;
-
-    const buildTime = coreDataReport.duration + metadataReport.duration + userInterfaceReport.duration;
-
+    const buildTime = (Math.round((coreDataReport.duration + metadataReport.duration + userInterfaceReport.duration) * 1000) / 1000).toFixed(3);
     const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
         <div id='body' className='container'>
-            <h1>LiveData Migrator Test Reporting Dashboard</h1>
+            <h2>{name}</h2>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
             <div id='body'>
@@ -81,10 +83,10 @@ function MigratorView() {
             </div>
 
             <div id='wrapper'>
-                <p>Total Tests Passed: <span id='pass'>{passCount}</span></p>
-                <p>Total Tests Failed: <span id='fail'>{failCount}</span></p>
-                <p>Total Tests Skipped: <span id='skip'>{skipCount}</span></p>
-                <p>Total Build Time: <span>{(Math.round(buildTime * 1000) / 1000).toFixed(3)} seconds</span></p>
+                <p>Total Tests Passed: <span id='pass'>{isNaN(passCount) ? "N/A" : passCount}</span></p>
+                <p>Total Tests Failed: <span id='fail'>{isNaN(failCount) ? "N/A" : failCount}</span></p>
+                <p>Total Tests Skipped: <span id='skip'>{isNaN(skipCount) ? "N/A" : skipCount}</span></p>
+                <p>Total Build Time: <span>{isNaN(buildTime) ? "N/A" : buildTime} seconds</span></p>
             </div>
 
             <div id='wrapper'>
@@ -110,4 +112,4 @@ function GetProductHealth({ passCount, failCount, skipCount }) {
     }
 }
 
-export { MigratorView as default, GetProductHealth };
+export { ProductView as default, GetProductHealth };

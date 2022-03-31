@@ -1,28 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import MigratorView from './MigratorView';
 import ComponentView from './ComponentView';
 import GetReport from './GetReport';
+import AddProduct from './AddProduct';
 import './style/report.css';
-
-// this will make a get request to localhost:5000/ and receive the json string "Successful Connection."
-// until this string is received, it will display the string "Loading..."
-// this function is mostly used to test and verify communication between the backend and the frontend.
-function ShowIsConnected() {
-    const [isConnected, setConnected] = useState(null);
-
-    fetch('http://localhost:5000')
-        .then(res => res.json())
-        .then(setConnected);
-
-    console.log(isConnected ? isConnected : "Loading...");
-}
+import ProductView from './ProductView';
 
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
-function ViewRoutes() {
-    const [showCore, setShowCore] = useState(true);
-    const [showMeta, setShowMeta] = useState(false);
-    const [showUI, setShowUI] = useState(false);
+function DashboardRoutes() {
+
+    // handle the state of ComponentView, ProductView and AddProduct
+    const [productViews, setProductViews] = useState([<ProductView name="Migrator" version="v1" result="passed" />]);
+
+    console.log("views: " + Object.prototype.toString.call(productViews));
 
     return (
         <Routes>
@@ -70,10 +60,28 @@ function ViewRoutes() {
                         </div> : null
                     }
                 </div>} />
+<<<<<<< HEAD:client/src/ViewRoutes.js
             <Route exact path='/*' element={<MigratorView />} />
 
+=======
+
+            <Route exact path='/*' element={
+                // use map() to render multiple ProductViews
+                <div id='report' style={{ margin: 10, padding: 10 }}>
+                    <h1>LiveData Migrator Test Reporting Dashboard</h1>
+                    <AddProduct productViews={productViews} setProductViews={setProductViews} />
+
+                    {productViews.map(({ productName, productVersion, productResult }, i) => (
+                        <Fragment key={i}>
+                            <ProductView name={productName} version={productVersion} result={productResult} />
+                        </Fragment>
+                    ))}
+
+                </div>
+            } />
+>>>>>>> add-component:client/src/DashboardRoutes.js
         </Routes>
     );
 }
 
-export { ViewRoutes as default };
+export { DashboardRoutes as default };
