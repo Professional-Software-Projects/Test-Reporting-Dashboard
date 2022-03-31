@@ -9,6 +9,9 @@ import ProductView from './ProductView';
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
 function DashboardRoutes() {
 
+    const [showCore, setShowCore] = useState(true);
+    const [showMeta, setShowMeta] = useState(false);
+    const [showUI, setShowUI] = useState(false);
     // handle the state of ComponentView, ProductView and AddProduct
     const [productViews, setProductViews] = useState([<ProductView name="Migrator" version="v1" result="passed" />]);
 
@@ -60,10 +63,6 @@ function DashboardRoutes() {
                         </div> : null
                     }
                 </div>} />
-<<<<<<< HEAD:client/src/ViewRoutes.js
-            <Route exact path='/*' element={<MigratorView />} />
-
-=======
 
             <Route exact path='/*' element={
                 // use map() to render multiple ProductViews
@@ -79,7 +78,6 @@ function DashboardRoutes() {
 
                 </div>
             } />
->>>>>>> add-component:client/src/DashboardRoutes.js
         </Routes>
     );
 }
