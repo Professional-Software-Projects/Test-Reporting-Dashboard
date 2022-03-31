@@ -65,7 +65,7 @@ function ComponentView(component) {
 
             <div id= 'details'>
                 <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
-                <div className='btn btn-group' style={{ display: 'block'}}>
+                <div className='btn btn-group' style={{ display: 'block', float: 'right', padding: '10px', position: 'relative', right: '40px'}}>
                     <Link to={'/components/' + componentName + '/v2/passed'}>
                         <button type="button" className="btn btn-default">{componentTitle} Health Report</button>
                     </Link>

@@ -5,7 +5,7 @@ $button-colour: #dfdfdf;
 $border-colour: #ec7700;
 
 #site {
-  background-color: #333;
+  //background-color: #333;
 }
 
 h1,
@@ -68,6 +68,7 @@ code {
 .topnav {
   background-color: rgba(245, 245, 245, 0.466);
   overflow: hidden;
+  height: 150px;
   
 
   img {
@@ -107,6 +108,32 @@ button.btn-default:hover {
   color: white;
 }
 
+button.btn-component {
+  border-width: thick;
+  width: 150px;
+  height: 50px;
+  border-radius: 5%;
+  padding: 10px;
+  @include button-variant(
+    $button-colour,
+    $border-colour,
+    darken($border-colour, 50%)
+  );
+  margin-right: 1%;
+  margin-left: 1%;
+  align-content: center;
+
+  span {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+button.btn-component:hover {
+  background-color: #ec7700;
+  color: white;
+}
+
 .table {
   background-color: whitesmoke;
   border: #333;
@@ -134,6 +161,15 @@ td {
   justify-content: center;
   align-items: center;
 }
+
+form {
+  border-radius: 5px;
+  background-color: #ec7700;
+  padding: 20px;
+  margin: 20px;
+
+}
+
 
 footer {
   background-color: #f89a1f;

@@ -35,7 +35,7 @@ function AddProduct({ productViews, setProductViews }) {
 
     return (
         <span style={{ float: 'left' }}>
-            <button type="button" className="btn btn-default" onClick={() => {
+            <button type="button" className="btn btn-component" style={{padding: '10px'}}onClick={() => {
                 setShowForm(!showForm);
             }}>
                 <span>Add Product</span>

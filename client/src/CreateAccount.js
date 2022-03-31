@@ -28,7 +28,7 @@ function CreateAccount() {
 
     return (
         <span>
-            <button type="button" className="btn btn-default" onClick={() => {
+            <button type="button" className="btn btn-component" style={{}}onClick={() => {
                 setShowForm(!showForm);
             }}>
                 <span>Create Account</span>
@@ -44,6 +44,7 @@ function CreateAccount() {
                             value={user.userName}
                             onChange={handleChange} />
                     </label>
+                    
                     <label htmlFor='userPassword'>
                         Password:
                         <input

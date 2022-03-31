@@ -11957,10 +11957,6 @@ fieldset:disabled .btn {
   }
 }
 
-#site {
-  background-color: #333;
-}
-
 h1, .h1, h2, .h2 {
   overflow: hidden;
   position: relative;
@@ -11974,16 +11970,13 @@ body {
   background-color: blue;
   color: #fff;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
- "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
- sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
- monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 #wrapper {
@@ -12019,6 +12012,7 @@ code {
 .topnav {
   background-color: rgba(245, 245, 245, 0.466);
   overflow: hidden;
+  height: 150px;
 }
 
 .topnav img {
@@ -12091,6 +12085,66 @@ button.btn-default:hover {
   color: white;
 }
 
+button.btn-component {
+  border-width: thick;
+  width: 150px;
+  height: 50px;
+  border-radius: 5%;
+  padding: 10px;
+  color: black;
+  background-color: #dfdfdf;
+  border-color: #ec7700;
+  margin-right: 1%;
+  margin-left: 1%;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+button.btn-component:hover {
+  color: #000;
+  background-color: #e4e4e4;
+  border-color: #ee851a;
+}
+
+.btn-check:focus + button.btn-component, button.btn-component:focus {
+  color: #000;
+  background-color: #e4e4e4;
+  border-color: #ee851a;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
+}
+
+.btn-check:checked + button.btn-component,
+.btn-check:active + button.btn-component, button.btn-component:active, button.btn-component.active,
+.show > button.btn-component.dropdown-toggle {
+  color: #000;
+  background-color: #e5e5e5;
+  border-color: #ee851a;
+}
+
+.btn-check:checked + button.btn-component:focus,
+.btn-check:active + button.btn-component:focus, button.btn-component:active:focus, button.btn-component.active:focus,
+.show > button.btn-component.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(201, 101, 0, 0.5);
+}
+
+button.btn-component:disabled, button.btn-component.disabled {
+  color: #000;
+  background-color: #dfdfdf;
+  border-color: #ec7700;
+}
+
+button.btn-component span {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button.btn-component:hover {
+  background-color: #ec7700;
+  color: white;
+}
+
 .table {
   background-color: whitesmoke;
   border: #333;
@@ -12122,6 +12176,13 @@ td {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+form {
+  border-radius: 5px;
+  background-color: #ec7700;
+  padding: 20px;
+  margin: 20px;
 }
 
 footer {
