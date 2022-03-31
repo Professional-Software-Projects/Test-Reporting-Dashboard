@@ -2,17 +2,9 @@ import React, { useState } from 'react';
 import ProductView from './ProductView';
 import './style/page.css'
 
-function AddProduct({ productViews, setProductViews }) {
-
-    console.log("add views: " + Object.prototype.toString.call(productViews));
-    console.log("set views: " + Object.prototype.toString.call(setProductViews));
-
-    const [product, setProduct] = useState({
-        productName: '',
-        productVersion: '',
-        productResult: ''
-    });
+function AddProduct({ product, setProduct, productViews, setProductViews }) {
     const [showForm, setShowForm] = useState(false);
+
 
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.name]: e.target.value });
@@ -20,17 +12,10 @@ function AddProduct({ productViews, setProductViews }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         console.log("Added Product " + product.productName + ", version " + product.productVersion + ", with a " + product.productResult + " result.");
 
         // concatenate element
         setProductViews([...productViews, <ProductView name={product.productName} version={product.productVersion} result={product.productResult} />]);
-
-        setProduct({
-            productName: '',
-            productVersion: '',
-            productResult: ''
-        });
     }
 
     return (
@@ -42,7 +27,7 @@ function AddProduct({ productViews, setProductViews }) {
             </button>
 
             {
-                showForm ? <form onSubmit={() => handleSubmit}>
+                showForm ? <form onSubmit={handleSubmit}>
 
                     <label htmlFor='productName'>
                         Product Name:
@@ -65,27 +50,31 @@ function AddProduct({ productViews, setProductViews }) {
                         type="radio"
                         name="productResult"
                         value="passed"
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        checked={product.productResult === "passed"} />
                     <label htmlFor='productResult'> Passed</label><br />
                     <input
                         type="radio"
                         name="productResult"
                         value="failed"
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        checked={product.productResult === "failed"} />
                     <label htmlFor='productResult'> Failed</label><br />
                     <input
                         type="radio"
                         name="productResult"
                         value="skipped"
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        checked={product.productResult === "skipped"} />
                     <label htmlFor='productResult'> Skipped</label><br />
 
                     <input type="submit" value="Add" />
                 </form> : null
             }
+
+
         </span>
     );
 }
-
 
 export { AddProduct as default };

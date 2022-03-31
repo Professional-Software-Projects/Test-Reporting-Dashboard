@@ -6,19 +6,14 @@ import 'chart.js/auto';
 import './style/page.css';
 import './style/report.css';
 
-/* TODO: implement a function to add a component to the page
-         parameters: component type (single component or all components), version number (v1 or v2), result (passed, failed or skipped)
-         the given parameters will then be used to build a url to fetch reports
-         then a display can be created from this, which will then be returned back to the page for the user
-*/
-
 function ProductView({ name, version, result }) {
     const [coreDataReport, getCoreDataReport] = useState(0);
     const [metadataReport, getMetadataReport] = useState(0);
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
-    const apiSuffix = version + '/' + result + '/2/testReport';
-
-    console.log(name + " " + version + " " + result);
+    const [productName, setProductName] = useState(name);
+    const [productVersion, setProductVersion] = useState(version);
+    const [productResult, setProductResult] = useState(result);
+    const apiSuffix = productVersion + '/' + productResult + '/2/testReport';
 
     useEffect(() => {
         let isMounted = true;
@@ -73,7 +68,7 @@ function ProductView({ name, version, result }) {
 
     return (
         <div id='body' className='container'>
-            <h2>{name}</h2>
+            <h2>{productName}</h2>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
             <div id='body'>
