@@ -6,14 +6,15 @@ import 'chart.js/auto';
 import './style/page.css';
 import './style/report.css';
 
-function ProductView({ name, version, result }) {
+function ProductView({ name, version, result, number }) {
     const [coreDataReport, getCoreDataReport] = useState(0);
     const [metadataReport, getMetadataReport] = useState(0);
     const [userInterfaceReport, getUserInterfaceReport] = useState(0);
     const [productName, setProductName] = useState(name);
     const [productVersion, setProductVersion] = useState(version);
     const [productResult, setProductResult] = useState(result);
-    const apiSuffix = productVersion + '/' + productResult + '/2/testReport';
+    const [productNumber, setProductNumber] = useState(number);
+    const apiSuffix = productVersion + '/' + productResult + '/' + productNumber + '/testReport';
 
     useEffect(() => {
         let isMounted = true;
@@ -88,6 +89,12 @@ function ProductView({ name, version, result }) {
                 <Pie data={data} height={300} width={300} options={options} />
             </div>
 
+            <div id='body'>
+                <button type="button" className="btn btn-default">Edit Product</button>
+            </div>
+            <div id='body'>
+                <button type="button" className="btn btn-default">Delete Product</button>
+            </div>
         </div>
     );
 }

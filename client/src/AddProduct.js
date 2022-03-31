@@ -12,10 +12,10 @@ function AddProduct({ product, setProduct, productViews, setProductViews }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Added Product " + product.productName + ", version " + product.productVersion + ", with a " + product.productResult + " result.");
+        console.log("Added Product " + product.productName + ", version " + product.productVersion + ", with a " + product.productResult + " result. Build job number " + product.productNumber);
 
         // concatenate element
-        setProductViews([...productViews, <ProductView name={product.productName} version={product.productVersion} result={product.productResult} />]);
+        setProductViews([...productViews, <ProductView name={product.productName} version={product.productVersion} result={product.productResult} number={product.productNumber} />]);
     }
 
     return (
@@ -45,7 +45,14 @@ function AddProduct({ product, setProduct, productViews, setProductViews }) {
                             value={product.productVersion}
                             onChange={handleChange} />
                     </label><br />
-
+                    <label htmlFor='productNumber'>
+                        Build Number:
+                        <input
+                            type="text"
+                            name="productNumber"
+                            value={product.productNumber}
+                            onChange={handleChange} />
+                    </label><br />
                     <input
                         type="radio"
                         name="productResult"

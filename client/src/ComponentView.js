@@ -7,21 +7,14 @@ import 'chart.js/auto';
 import './style/page.css';
 import './style/report.css';
 
-function ComponentView(component) {
+function ComponentView({ name, version, result, number }) {
     const [report, getReport] = useState(0);
-    const componentName = component.component;
-    const versionNumber = component.version;
-    let componentTitle;
+    const [componentName, setProductName] = useState(name);
+    const [componentVersion, setProductVersion] = useState(version);
+    const [componentResult, setProductResult] = useState(result);
+    const [componentNumber, setProductNumber] = useState(number);
 
-    if (componentName === 'core-data') {
-        componentTitle = 'Migrator Core Data';
-    } else if (componentName === 'metadata') {
-        componentTitle = 'Migrator Metadata';
-    } else if (componentName === 'ui') {
-        componentTitle = 'Migrator UI';
-    }
-
-    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport';
+    const reportUrl = 'http://localhost:5000/' + componentName + '/' + componentVersion + '/' + componentResult + '/' + componentNumber + '/testReport';
 
     useEffect(() => {
         let isMounted = true;
@@ -40,7 +33,7 @@ function ComponentView(component) {
             });
 
         return () => isMounted = false;
-    }, [componentName, reportUrl, versionNumber]);
+    }, [componentName, reportUrl, componentVersion]);
 
     const failCount = report.failCount;
     const passCount = report.passCount;
@@ -50,7 +43,7 @@ function ComponentView(component) {
 
     return (
         <div id='report' className='container'>
-            <h1 id='component'>LiveData {componentTitle}</h1>
+            <h1 id='component'>LiveData {componentName}</h1>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
             <div id='wrapper'>
@@ -64,16 +57,16 @@ function ComponentView(component) {
             </div>
 
             <div id='menu'>
-                <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
+                <p>Click the button below to view a more detailed report of <span>{componentName}</span>.</p>
                 <div className='btn btn-group' style={{ display: 'block', margin: '0 auto' }}>
                     <Link to={'/components/' + componentName + '/v2/passed'}>
-                        <button type="button" className="btn btn-default">{componentTitle} Health Report</button>
+                        <button type="button" className="btn btn-default">{componentName} Health Report</button>
                     </Link>
                     <Link to={'/components/' + componentName + '/v2/passed/2'}>
-                        <button type="button" className="btn btn-default">{componentTitle} Build Data</button>
+                        <button type="button" className="btn btn-default">{componentName} Build Data</button>
                     </Link>
                     <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
-                        <button type='button' className="btn btn-default">{componentTitle} Test Report</button>
+                        <button type='button' className="btn btn-default">{componentName} Test Report</button>
                     </Link>
                 </div>
             </div>
