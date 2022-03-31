@@ -4,6 +4,7 @@ const app = express();
 import { make_API_call } from './api_caller';
 import cors from 'cors';
 import { connectToServer } from '../db_functions/conn';
+import { getDb } from '../db_functions/conn';
 const port = process.env.PORT || 5000;
 
 app.use(json());
@@ -14,12 +15,25 @@ const apiSuffix = '/api/json';
 // TODO: add PUT calls to add tests to the database
 
 function fetchReport(res, req, url) {
+
     make_API_call(url)
         .then(response => {
             res.json(response);
             console.log(`Communication with the API from ${req.originalUrl} was successful.`);
-        })
-        .catch(err => {
+
+            connectToServer(function (err, db) {
+                if (err) console.log(err);
+                var dbo = db.db("test_reports")
+                dbo.collection("GeneralReport").insertOne(response, (result) => {
+                    if (err) console.log(err);
+                    if (result) {
+                        console.log("Import JSON into database successfully.");
+                        db.close();
+                    }
+                });
+            })
+
+        }).catch(err => {
             console.log(`Unable to communicate with the API from ${req.originalUrl}. Is the API down?`);
             console.log(err);
             res.send(err);

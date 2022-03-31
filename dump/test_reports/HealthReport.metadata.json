@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"9c401245b2464ef4ade624ec73e32b44","collectionName":"HealthReport","type":"collection"}
