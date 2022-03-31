@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
-import { GetProductHealth } from './MigratorView.js';
-import 'chart.js/auto'
+import { GetProductHealth } from './ProductView.js';
 import getChart from './PieChartTemplate.js';
+import 'chart.js/auto';
+import './style/page.css';
 import './style/report.css';
-
 
 function ComponentView(component) {
     const [report, getReport] = useState(0);
@@ -21,7 +21,7 @@ function ComponentView(component) {
         componentTitle = 'Migrator UI';
     }
 
-    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/3/testReport';
+    const reportUrl = 'http://localhost:5000/' + componentName + '/' + versionNumber + '/passed/2/testReport';
 
     useEffect(() => {
         let isMounted = true;
@@ -45,8 +45,7 @@ function ComponentView(component) {
     const failCount = report.failCount;
     const passCount = report.passCount;
     const skipCount = report.skipCount;
-    const buildTime = report.duration;
-
+    const buildTime = (Math.round(report.duration * 1000) / 1000).toFixed(3);
     const [data, options] = getChart({ passCount, failCount, skipCount });
 
     return (
@@ -55,10 +54,10 @@ function ComponentView(component) {
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
             <div id='wrapper'>
-                <p>Total Tests Passed: <span id='pass'>{passCount}</span></p>
-                <p>Total Tests Failed: <span id='fail'>{failCount}</span></p>
-                <p>Total Tests Skipped: <span id='skip'>{skipCount}</span></p>
-                <p>Total Build Time: <span>{(Math.round(buildTime * 1000) / 1000).toFixed(3)} seconds</span></p>
+                <p>Total Tests Passed: <span id='pass'>{isNaN(passCount) ? "N/A" : passCount}</span></p>
+                <p>Total Tests Failed: <span id='fail'>{isNaN(failCount) ? "N/A" : failCount}</span></p>
+                <p>Total Tests Skipped: <span id='skip'>{isNaN(skipCount) ? "N/A" : skipCount}</span></p>
+                <p>Total Build Time: <span>{isNaN(buildTime) ? "N/A" : buildTime} seconds</span></p>
             </div>
             <div id='wrapper'>
                 <Pie data={data} height={200} width={200} options={options} />
