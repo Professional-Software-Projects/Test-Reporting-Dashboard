@@ -16,6 +16,7 @@ function AddComponent({ component, setComponent, componentViews, setComponentVie
 
         // concatenate element
         setComponentViews([...componentViews, <ComponentView name={component.componentName} version={component.componentVersion} result={component.componentResult} number={component.componentNumber} />]);
+        setShowForm(!showForm);
     }
 
     return (

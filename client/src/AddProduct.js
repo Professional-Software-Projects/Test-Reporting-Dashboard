@@ -16,6 +16,7 @@ function AddProduct({ product, setProduct, productViews, setProductViews }) {
 
         // concatenate element
         setProductViews([...productViews, <ProductView name={product.productName} version={product.productVersion} result={product.productResult} number={product.productNumber} />]);
+        setShowForm(!showForm);
     }
 
     return (
