@@ -6,7 +6,11 @@ By Ross Edwards, James Ackers and Philip Janes.
 
 ## Project Setup
 
-Before running anything, type `npm install` into the console in the directory you intend to run to install the dependencies.
+There have been some issues with the Babel transpiler, which have resulted in the server failing to start on some machines due to an outdated version of Babel being used. While we have tried our best to correct this issue, we could not find out what was causing it. Running the website in a Docker container eliminates this issue.
+
+To install the server dependencies, type `cd server` and then `npm install`.
+
+To install the client dependencies, type `cd client` and then `npm install`.
 
 ## Running the dashboard without containerisation
 
@@ -20,11 +24,13 @@ To run the database, go into your mongodb `bin` directory, then type `.\mongod.e
 
 You will need to have Docker and Docker Compose installed for this.
 
+We have included a script called `run.bat` that will make starting the container easier, but if you'd prefer to do the commands yourself then please read the instructions below:
+
 To build the image, type `docker build --tag NAME_OF_IMAGE ./NAME_OF_IMAGE/`.
 
 Once the images have been built, the dashboard can be run with the command `docker-compose up`, which will run the frontend, backend and database in three separate containers. When you're finished with the container, run the command `docker-compose stop` to close it. After the first time running the container, you can run it with `docker-compose start` instead.
 
-If you would like to access the MongoDB Shell whilst the container is running, execute the command `docker exec -it test-reporting-dashboard-database bash`, then if the prompt changes to a shebang (!#), type `mongo` and you will enter the shell and can enter commands.
+If you would like to access the MongoDB Shell whilst the container is running, execute the command `docker exec -it database bash`, then if the prompt changes to a shebang (!#), type `mongo` and you will enter the shell and can enter commands.
 
 ## Dumping and Restoring Data
 
