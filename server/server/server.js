@@ -21,18 +21,6 @@ function fetchReport(res, req, url) {
             res.json(response);
             console.log(`Communication with the API from ${req.originalUrl} was successful.`);
 
-            connectToServer(function (err, db) {
-                if (err) console.log(err);
-                var dbo = db.db("test_reports")
-                dbo.collection("GeneralReport").insertOne(response, (result) => {
-                    if (err) console.log(err);
-                    if (result) {
-                        console.log("Import JSON into database successfully.");
-                        db.close();
-                    }
-                });
-            })
-
         }).catch(err => {
             console.log(`Unable to communicate with the API from ${req.originalUrl}. Is the API down?`);
             console.log(err);

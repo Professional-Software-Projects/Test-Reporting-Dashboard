@@ -10,9 +10,6 @@ import './style/report.css';
 // TODO: Implement routes to view the LiveData Migrator version 1 test reports
 function DashboardRoutes() {
 
-    const [showCore, setShowCore] = useState(true);
-    const [showMeta, setShowMeta] = useState(false);
-    const [showUI, setShowUI] = useState(false);
     // handle the state of ComponentView, ProductView and AddProduct
     const [productViews, setProductViews] = useState([]);
     const [componentViews, setComponentViews] = useState([]);
@@ -38,49 +35,8 @@ function DashboardRoutes() {
             <Route path='components/:component/:version/:result/*' element={<GetReport />} />
 
             <Route path='components' element={
-                <div id='report' style={{ margin: 25, padding: 10, backgroundColor: 'whitesmoke'}}>
+                <div id='report' style={{ margin: 25, padding: 10, backgroundColor: 'whitesmoke' }}>
                     <h1 style={{ fontWeight: 'bold' }}>Component Reports</h1>
-<<<<<<< HEAD
-                    <div id='menu'>
-                        <button type="button" className="btn btn-default" onClick={() => {
-                            setShowCore(true);
-                            setShowMeta(false);
-                            setShowUI(false);
-                        }}>Core data</button>
-                        <button type="button" className="btn btn-default" onClick={() => {
-                            setShowCore(false);
-                            setShowMeta(true);
-                            setShowUI(false);
-                        }}>Meta Data</button>
-                        <button type="button" className="btn btn-default" onClick={() => {
-                            setShowCore(false);
-                            setShowMeta(false);
-                            setShowUI(true);
-                        }}>UI</button>
-                    
-                        <Link to='/'>
-                            <button type="button" className="btn btn-default" >View Rolled Up Test Results </button>
-                        </Link>
-                    </div>
-                    {
-                        showCore ? <div>
-                            <ComponentView component='core-data' version='v2' className="column" />
-                        </div> : null
-                    }
-                    {
-                        showMeta ? <div>
-                            <ComponentView component='metadata' version='v2' className="column" />
-                        </div> : null
-                    }
-                    {
-                        showUI ? <div>
-                            <ComponentView component='ui' version='v2' className="column" />
-                        </div> : null
-                    }
-=======
-                    <Link to='/'>
-                        <button type="button" className="btn btn-default">View Rolled Up Test Results</button>
-                    </Link>
 
                     <AddComponent component={component} setComponent={setComponent} componentViews={componentViews} setComponentViews={setComponentViews} />
 
@@ -90,7 +46,6 @@ function DashboardRoutes() {
                         </Fragment>
                     ))}
 
->>>>>>> add-component
                 </div>} />
 
             <Route exact path='/*' element={

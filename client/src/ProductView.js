@@ -72,7 +72,7 @@ function ProductView({ name, version, result, number }) {
             <h2>{productName}</h2>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
-            <div id='body'>
+            <div id='report' style={{ margin: 25, padding: 10, backgroundColor: 'whitesmoke' }}>
                 <Link to='components'>
                     <button type="button" className="btn btn-default">View Test Results for Individual Components</button>
                 </Link>

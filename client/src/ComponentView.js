@@ -46,6 +46,10 @@ function ComponentView({ name, version, result, number }) {
             <h1 id='component'>LiveData {componentName}</h1>
             <GetProductHealth passCount={passCount} failCount={failCount} skipCount={skipCount} />
 
+            <Link to='/'>
+                <button type="button" className="btn btn-default">View Rolled Up Test Results</button>
+            </Link>
+
             <div id='wrapper'>
                 <p>Total Tests Passed: <span id='pass'>{isNaN(passCount) ? "N/A" : passCount}</span></p>
                 <p>Total Tests Failed: <span id='fail'>{isNaN(failCount) ? "N/A" : failCount}</span></p>
@@ -57,21 +61,18 @@ function ComponentView({ name, version, result, number }) {
             </div>
 
             <div id='details'>
-                <p>Click the button below to view a more detailed report of <span>{componentTitle}</span>.</p>
-                <div className='btn btn-group' style={{ display: 'block', float: 'right', padding: '10px', position: 'relative', right: '40px' }}>
-                    <div id='menu'>
-                        <p>Click the button below to view a more detailed report of <span>{componentName}</span>.</p>
-                        <div className='btn btn-group' style={{ display: 'block', margin: '0 auto' }}>
-                            <Link to={'/components/' + componentName + '/v2/passed'}>
-                                <button type="button" className="btn btn-default">{componentName} Health Report</button>
-                            </Link>
-                            <Link to={'/components/' + componentName + '/v2/passed/2'}>
-                                <button type="button" className="btn btn-default">{componentName} Build Data</button>
-                            </Link>
-                            <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
-                                <button type='button' className="btn btn-default">{componentName} Test Report</button>
-                            </Link>
-                        </div>
+                <div id='menu'>
+                    <p>Click the button below to view a more detailed report of <span>{componentName}</span>.</p>
+                    <div className='btn btn-group' style={{ display: 'block', margin: '0 auto' }}>
+                        <Link to={'/components/' + componentName + '/v2/passed'}>
+                            <button type="button" className="btn btn-default">{componentName} Health Report</button>
+                        </Link>
+                        <Link to={'/components/' + componentName + '/v2/passed/2'}>
+                            <button type="button" className="btn btn-default">{componentName} Build Data</button>
+                        </Link>
+                        <Link to={'/components/' + componentName + '/v2/passed/2/testReport'}>
+                            <button type='button' className="btn btn-default">{componentName} Test Report</button>
+                        </Link>
                     </div>
 
                     <div id='body'>
@@ -81,7 +82,9 @@ function ComponentView({ name, version, result, number }) {
                         <button type="button" className="btn btn-default">Delete Product</button>
                     </div>
                 </div>
-                );
+            </div>
+        </div>
+    );
 }
 
-                export {ComponentView as default}
+export { ComponentView as default };
